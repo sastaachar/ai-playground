@@ -9,7 +9,7 @@ export const config = {
   AI_PARAMS : {
     API_LINK: process.env.AI_API_LINK,
     MODEL: process.env.AI_MODEL || 'gpt-4o-mini',
-    TEMPERATURE: Number(process.env.AI_TEMPERATURE) ||  0,
+    TEMPERATURE: Number(process.env.AI_TEMPERATURE) ||  0.2,
     TOP_P: Number(process.env.AI_TOP_P) || 0.9,
     PRESENCE_PENALTY: Number(process.env.AI_PRESENCE_PENALTY) || 0.9,
     FREQUENCY_PENALTY: Number(process.env.AI_FREQUENCY_PENALTY) || 0.9,
