@@ -25,3 +25,7 @@ dist-ssr
 .vercel
 
 .env
+
+# ignore all js files form vite build
+*.js
+*.tsbuildinfo
