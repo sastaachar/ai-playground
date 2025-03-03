@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
-const url = "http://localhost:3000/api/convo/ask";
+// move to env
+const url = "https://ai-playground-tse.vercel.app/api/convo/ask";
 
 const parseEventData = (data: string) => {
   // console.log(data)
