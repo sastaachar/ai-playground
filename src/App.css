@@ -1,8 +1,8 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  width: 100%;
+    height: 100%;
 }
 
 .logo {
@@ -39,4 +39,59 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.chat-container {
+  border-radius: 10px;
+  width: 100%;
+  align-self: flex-end;
+}
+
+.chat-box {
+  overflow-y: auto;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message.user {
+  text-align: right;
+}
+
+.message.assistant {
+  background-color: #fff3e0;
+}
+
+.input-container {
+  display: flex;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
 }
