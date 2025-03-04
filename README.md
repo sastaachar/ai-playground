@@ -1,2 +1,2 @@
 CODEX
-comit
+commit
