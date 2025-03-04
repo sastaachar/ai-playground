@@ -1,10 +1,23 @@
 import { config } from "./constants.js";
+import { Message } from "./types.js";
+
+
+
 
 export const askAi = (query: string) => {
-  return fetch(config.AI_PARAMS.API_LINK, {
+
+  const model = config.AI.MODEL;
+  const apiLink = config.AI.CREDS[model].API_LINK;
+  const apiKey = config.AI.CREDS[model].API_KEY;
+
+  if (!apiLink || !apiKey) {
+    throw new Error("Invalid API credentials");
+  }
+
+  return fetch(apiLink, {
     headers: {
       "Content-Type": "application/json",
-      "api-key": config.AI_PARAMS.API_KEY,
+      "api-key": apiKey,
       'accept': 'text/event-stream',
     },
     body: JSON.stringify({
@@ -15,14 +28,42 @@ export const askAi = (query: string) => {
         role: "user",
         content: `${query}`,
       }],
-      model: config.AI_PARAMS.MODEL,
-      temperature: config.AI_PARAMS.TEMPERATURE,
-      top_p: config.AI_PARAMS.TOP_P,
-      presence_penalty: config.AI_PARAMS.PRESENCE_PENALTY,
-      frequency_penalty: config.AI_PARAMS.FREQUENCY_PENALTY,
-      stream: config.AI_PARAMS.STREAM,
+      temperature: config.AI.PARAMS.TEMPERATURE,
+      top_p: config.AI.PARAMS.TOP_P,
+      presence_penalty: config.AI.PARAMS.PRESENCE_PENALTY,
+      frequency_penalty: config.AI.PARAMS.FREQUENCY_PENALTY,
+      stream: config.AI.STREAM,
     }), 
     method: "POST",
   });
+}
+
+type GPTOptions = {
+  model?: string;
+}
+
+export const getGPTResponse = (messages: Message[], options: GPTOptions = {}) => {
+
+  const isValidModel = options.model && Object.keys(config.AI.CREDS).includes(options.model || config.AI.MODEL);
+  const model =  isValidModel ? options.model : config.AI.MODEL;
+  const apiLink = config.AI.CREDS[model].API_LINK;
+  const apiKey = config.AI.CREDS[model].API_KEY;
+
+  return fetch(apiLink, {
+    headers: {
+      "Content-Type": "application/json",
+      "api-key": apiKey,
+      'accept': 'text/event-stream',
+    },
+    body: JSON.stringify({
+      messages,
+      temperature: config.AI.PARAMS.TEMPERATURE,
+      top_p: config.AI.PARAMS.TOP_P,
+      presence_penalty: config.AI.PARAMS.PRESENCE_PENALTY,
+      frequency_penalty: config.AI.PARAMS.FREQUENCY_PENALTY,
+      stream: config.AI.STREAM,
+    }), 
+    method: "POST",
+  });  
 }
 

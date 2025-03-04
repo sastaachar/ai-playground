@@ -2,7 +2,10 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "ES2017",
-    "moduleResolution": "bundler",
-    "jsx": "react-jsx"
-  }
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "lib": ["dom"],
+    "allowSyntheticDefaultImports": true,
+  },
+  
 }
