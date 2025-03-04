@@ -29,3 +29,4 @@ dist-ssr
 # ignore all js files form vite build
 *.js
 *.tsbuildinfo
+!templates
