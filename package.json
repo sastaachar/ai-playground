@@ -12,6 +12,7 @@
   "dependencies": {
     "@ai-sdk/azure": "^1.1.15",
     "@ai-sdk/openai": "^1.1.15",
+    "@ant-design/pro-chat": "^1.15.3",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@stackblitz/sdk": "^1.11.0",
     "@thoughtspot/rest-api-sdk": "^2.12.0",

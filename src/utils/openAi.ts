@@ -1,6 +1,6 @@
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
-const url = "/api/convo/ask";
+const url = "http://localhost:3000/api/convo/ask";
 
 async function streamOpenAI({
     query,
@@ -87,4 +87,16 @@ function parseEventData(data: string) {
 }
   
 
-export { streamOpenAI };
+const askApi = (query: string) => {
+  return fetch(url, {
+    body: 
+       JSON.stringify({
+        query: query,
+      }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    }});
+};
+
+export { streamOpenAI, askApi };

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./index.css";
 import { PlaygroundProps, Message, Sender } from "../../types";
-import { streamOpenAI } from "../../utils/openAi";
+import { askApi, streamOpenAI } from "../../utils/openAi";
 import { v4 as uuidv4 } from "uuid";
+import { ProChat } from "@ant-design/pro-chat";
 
 const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -26,11 +27,11 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
       streamOpenAI({
         query: userInput,
         onData: (data) => {
-          setMessages(messages => {
+          setMessages((messages) => {
             const newMessages = [...messages];
-            newMessages[newMessages.length -1].text = data;
+            newMessages[newMessages.length - 1].text = data;
             return newMessages;
-          })
+          });
         },
       });
     } catch (error) {
@@ -127,4 +128,49 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
   );
 };
 
-export default ChatGPT;
+const NewChat = () => {
+  return (
+    <ProChat
+      request={async (messages) => {
+        const lastMessage =
+          (messages[messages.length - 1] as any).message || "";
+
+        if (messages.length > 2) {
+          // pipe through
+          return await askApi(lastMessage);
+        }
+
+        // Send a request with Message as the parameter
+        return "messages"; // Supports both streaming and non-streaming
+      }}
+      locale="en-US"
+      chatItemRenderConfig={{
+        contentRender: (P, A) => {
+          console.log("a", P.message);
+          return A;
+        },
+      }}
+      transformToChatMessage={(text) => {
+        const chunks = text.split("data:");
+
+        const cleanChunks = chunks
+          .map((chunk) => chunk.trim())
+          .filter((chunk) => chunk);
+        const properTextChunks = cleanChunks.map((chunk) => {
+          try {
+            const data = JSON.parse(chunk);
+            console.log(data);
+            return data?.choices?.[0]?.delta?.content || "";
+          } catch (e) {
+            // @prashant fix this asap
+            return "...";
+          }
+        });
+
+        return properTextChunks.join("");
+      }}
+    />
+  );
+};
+
+export default NewChat;

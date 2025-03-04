@@ -1,12 +1,12 @@
 .home-container {
   display: flex;
-  width: 98%;
-  height: calc(100vh - 80px);
-  margin:20px;
+  flex-direction: row;
+  flex: 1;
 }
 
 .left-panel {
-  width: 35%;
+  flex: 1;
+  min-width: 650px;
   display: flex;
   background-color: #ffffff;
   overflow-y: auto;
@@ -15,7 +15,7 @@
 }
 
 .right-panel {
-  width: 65%;
+  flex: 1;
   background-color: #ffffff;
   overflow: hidden;
   transition: width 0.3s ease;

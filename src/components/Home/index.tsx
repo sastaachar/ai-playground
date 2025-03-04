@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Home.css';
 import Stackblitz from '../Stackblitz';
-import ChatGPT from '../Playground';
+import ChatBox from '../Playground';
 
 const Home: React.FC = () => {
   const [currentCode, setCurrentCode] = useState('');
@@ -9,7 +9,7 @@ const Home: React.FC = () => {
   return (
     <div className="home-container">
       <div className="left-panel">
-        <ChatGPT onCodeChange={setCurrentCode} />
+        <ChatBox />
       </div>
       <div className="right-panel">
         <Stackblitz code={currentCode} />
