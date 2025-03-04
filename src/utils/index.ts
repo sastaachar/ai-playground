@@ -78,7 +78,11 @@ async function streamOpenAI({
   }
 
 function parseEventData(data: string) {
-    throw new Error("Function not implemented.");
+    try {
+        return JSON.parse(data);
+    } catch {
+        return { content: '', done: false };
+    }
 }
   
 
