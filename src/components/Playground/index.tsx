@@ -1,30 +1,40 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './index.css';
-import { PlaygroundProps, Message } from '../../types';
-import { streamOpenAI } from '../../utils';
+import React, { useState, useRef, useEffect } from "react";
+import "./index.css";
+import { PlaygroundProps, Message, Sender } from "../../types";
+import { streamOpenAI } from "../../utils/openAi";
+import { v4 as uuidv4 } from "uuid";
+
 const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [userInput, setUserInput] = useState<string>('');
+  const [userInput, setUserInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleSend = async () => {
     if (!userInput) return;
-    const newMessages = [...messages, { sender: 'user' as const, text: userInput }];
+
+    const newMessages: Message[] = [
+      ...messages,
+      { sender: Sender.User, text: userInput, id: uuidv4() },
+      { sender: Sender.Assistant, text: "Thinking...", id: uuidv4() },
+    ];
     setMessages(newMessages);
-    setUserInput('');
+    setUserInput("");
     setLoading(true);
 
     try {
-      const data = await streamOpenAI({
+      streamOpenAI({
         query: userInput,
         onData: (data) => {
-          console.log(data);
-        }
+          setMessages(messages => {
+            const newMessages = [...messages];
+            newMessages[newMessages.length -1].text = data;
+            return newMessages;
+          })
+        },
       });
-
     } catch (error) {
-      console.error('Error getting response:', error);
+      console.error("Error getting response:", error);
     } finally {
       setLoading(false);
     }
@@ -32,8 +42,9 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
 
   const handleRunCode = (code: string) => {
     if (onCodeChange) {
-      const cleanedCode = code.replace(/export default \w+;/, 'export default App;')
-        .replace(/const \w+ = /, 'const App = ');
+      const cleanedCode = code
+        .replace(/export default \w+;/, "export default App;")
+        .replace(/const \w+ = /, "const App = ");
       onCodeChange(cleanedCode);
     }
   };
@@ -44,7 +55,6 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
     }
   }, [messages]);
 
-
   const renderInputComponent = () => {
     return (
       <div className="chat-input-container">
@@ -53,18 +63,23 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Ask for a React component example..."
-          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+          onKeyPress={(e) => e.key === "Enter" && handleSend()}
         />
         <button onClick={handleSend}>Send</button>
       </div>
-    )
-  }
+    );
+  };
 
   const renderMessages = () => {
     return (
       <div className="messages-area" ref={containerRef}>
         {messages.map((msg, index) => (
-          <div key={index} className={`chat-message ${msg.sender === 'user' ? 'human-message' : 'ai-message'}`}>
+          <div
+            key={index}
+            className={`chat-message ${
+              msg.sender === Sender.User ? "human-message" : "ai-message"
+            }`}
+          >
             <div className="message-content">
               {msg.text}
               {msg.code && (
@@ -74,14 +89,18 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
               )}
               {msg.code && (
                 <div className="code-actions">
-                  <button onClick={() => {
-                    if (msg.code) navigator.clipboard.writeText(msg.code);
-                  }}>
+                  <button
+                    onClick={() => {
+                      if (msg.code) navigator.clipboard.writeText(msg.code);
+                    }}
+                  >
                     Copy
                   </button>
-                  <button onClick={() => {
-                    if (msg.code) handleRunCode(msg.code);
-                  }}>
+                  <button
+                    onClick={() => {
+                      if (msg.code) handleRunCode(msg.code);
+                    }}
+                  >
                     Run Code
                   </button>
                 </div>
@@ -90,8 +109,8 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
           </div>
         ))}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="chat-container">
@@ -104,7 +123,6 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
         )}
       </div>
       {renderInputComponent()}
-      
     </div>
   );
 };

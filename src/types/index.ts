@@ -1,9 +1,13 @@
-
+export enum Sender {
+  User = 'User',
+  Assistant = 'Assistant',
+}
 
 export type Message = {
-    sender: 'user' | 'assistant';
+    sender: Sender;
     text: string;
     code?: string;
+    id: string;
   };
   
 export interface PlaygroundProps {

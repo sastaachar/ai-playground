@@ -1,6 +1,6 @@
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
-const url = "https://ai-playground-tse.vercel.app/api/convo/ask";
+const url = "/api/convo/ask";
 
 async function streamOpenAI({
     query,
@@ -43,7 +43,7 @@ async function streamOpenAI({
       onmessage: (e) => {
         try {
           const chunk = parseEventData(e.data);
-          content += chunk?.content || "";
+          content += chunk?.choices?.[0].delta?.content|| "";
           console.log(chunk.content)
           onData(content);
           onChunk?.(chunk);
@@ -60,6 +60,7 @@ async function streamOpenAI({
          },
       onerror: (e) => {
         console.log(e);
+        throw new Error("a")
       },
       onopen: async () => {
         retries += 1;

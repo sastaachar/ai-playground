@@ -9,7 +9,7 @@ import './styles.css';
 // Use prefetch to load static resources early and optimize response time. 
 // Call init early to complete authentication during app load for better performance.
 init({
-  thoughtSpotHost: "http://localhost:3000",
+  thoughtSpotHost: "https://embed-1-do-not-delete.thoughtspotstaging.cloud",
   authType: AuthType.None,
 });
 
