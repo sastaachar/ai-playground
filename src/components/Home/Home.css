@@ -1,0 +1,170 @@
+.home-container {
+  display: flex;
+  width: 98%;
+  height: calc(100vh - 80px);
+  margin:20px;
+}
+
+.left-panel {
+  width: 35%;
+  display: flex;
+  background-color: #ffffff;
+  overflow-y: auto;
+  transition: width 0.3sease;
+  border: 1px solid #ebebeb;
+}
+
+.right-panel {
+  width: 65%;
+  background-color: #ffffff;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  margin:20px
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: #007bff;
+  color: white;
+  border-radius: 15px 15px 0 15px;
+  max-width: 90%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+.system-message {
+  align-self: flex-start;
+  background-color: #e9ecef;
+  color: #212529;
+  border-radius: 15px 15px 15px 0;
+  max-width: 80%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+/* ChatGPT Container Styles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.messages-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: scroll;
+}
+
+.chat-input-container {
+  display: flex;
+  gap: 10px;
+  background-color: #ffffff;
+  border-top: 1px solid #e1e1e1;
+}
+
+.chat-input-container input {
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input-container input:focus {
+  border-color: #007bff;
+}
+
+.chat-input-container button {
+  padding: 12px 24px;
+    background-color: #ffffff;
+    color: #606060;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: 1px solid #d9d9d9;
+}
+
+.chat-input-container button:hover {
+  background-color: #0056b3;
+}
+
+/* Message Styles */
+.chat-message {
+  padding: 8px;
+  border-radius: 10px;
+  max-width: 90%;
+  line-height: 1.5;
+}
+
+.message-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 15px;
+}
+
+.stackblitz-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: #ffffff;
+}
+
+.stackblitz-container {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Responsive layout for screens smaller than 768px */
+@media screen and (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    height: 50vh;
+  }
+  
+  .message-container {
+    padding: 5px;
+  }
+  
+  .user-message,
+  .system-message {
+    max-width: 90%;
+  }
+
+  .chat-message {
+    max-width: 95%;
+  }
+
+  .chat-input-container {
+    padding: 10px;
+  }
+
+  .stackblitz-iframe {
+    height: 100%;
+    width: 100%;
+  }
+
+  .stackblitz-container {
+    height: 100%;
+    width: 100%;
+  }
+} 

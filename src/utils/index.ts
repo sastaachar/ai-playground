@@ -1,0 +1,85 @@
+import { fetchEventSource } from "@microsoft/fetch-event-source";
+
+const url = "https://ai-playground-tse.vercel.app/api/convo/ask";
+
+async function streamOpenAI({
+    query,
+    onData,
+    onChunk,
+    onComplete,
+  }: {
+    query: string;
+    onData: (data: any) => void;
+    onChunk?: (chunk: any) => void;
+    onComplete?: () => void;
+  }) {
+    console.log("i am called");
+    const abortController = new AbortController();
+    const { signal } = abortController;
+    let content = "";
+    let retries = 0;
+    fetchEventSource(url, {
+      body: 
+         JSON.stringify({
+          query: query,
+          messages: [{
+            role: "system",
+            content: "You are a helpful assistant to web developers, trying to embed Thoughtspot in their application.",
+          }, {
+            role: "user",
+            content: `${query}`,
+          }],
+          model: 'gpt-4o-mini',
+          temperature: 0,
+          top_p: 0.9,
+          presence_penalty: 0,
+          frequency_penalty: 0,
+          stream: true,
+        }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      onmessage: (e) => {
+        try {
+          const chunk = parseEventData(e.data);
+          content += chunk?.content || "";
+          console.log(chunk.content)
+          onData(content);
+          onChunk?.(chunk);
+  
+          if (chunk.done) {
+            onComplete?.();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      onclose: () => {
+        console.log("closed");
+         },
+      onerror: (e) => {
+        console.log(e);
+      },
+      onopen: async () => {
+        retries += 1;
+        if(retries > 3) {
+          onComplete?.();
+          throw new Error("Failed to connect to the server");
+        }
+        console.log("opened");
+      },
+      signal,
+    });
+  
+    return {
+      abort: () => abortController.abort(),
+    };
+  }
+
+function parseEventData(data: string) {
+    throw new Error("Function not implemented.");
+}
+  
+
+export { streamOpenAI };
