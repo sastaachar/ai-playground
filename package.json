@@ -14,6 +14,12 @@
     "@thoughtspot/rest-api-sdk": "^2.12.0",
     "@thoughtspot/visual-embed-sdk": "^1.36.1",
     "axios": "^1.8.1",
+    "@ai-sdk/azure": "^1.1.15",
+    "@ai-sdk/openai": "^1.1.15",
+    "@microsoft/fetch-event-source": "^2.0.1",
+    "@types/node": "^22.13.8",
+    "ai": "^4.1.47",
+    "openai": "^4.86.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

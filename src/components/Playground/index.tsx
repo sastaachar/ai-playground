@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './index.css';
-import ChatAPI from '../../APIs';
-import { ChatGPTProps, Message } from '../../types';
-
-
-const ChatGPT: React.FC<ChatGPTProps> = ({ onCodeChange }) => {
+import { PlaygroundProps, Message } from '../../types';
+import { streamOpenAI } from '../../utils';
+const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,19 +16,15 @@ const ChatGPT: React.FC<ChatGPTProps> = ({ onCodeChange }) => {
     setLoading(true);
 
     try {
-      const response = await ChatAPI.mockAskQuestion(userInput);
-      const newMessage = {
-        sender: 'assistant' as const,
-        text: response.text,
-        code: response.code
-      };
-      setMessages([...newMessages, newMessage]);
+      const data = await streamOpenAI({
+        query: userInput,
+        onData: (data) => {
+          console.log(data);
+        }
+      });
+
     } catch (error) {
       console.error('Error getting response:', error);
-      setMessages([
-        ...newMessages,
-        { sender: 'assistant', text: 'Sorry, I encountered an error. Please try again.' }
-      ]);
     } finally {
       setLoading(false);
     }

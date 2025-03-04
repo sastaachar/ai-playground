@@ -6,6 +6,6 @@ export type Message = {
     code?: string;
   };
   
-export interface ChatGPTProps {
+export interface PlaygroundProps {
     onCodeChange?: (code: string) => void;
   }

@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel
+
+.env
+
+# ignore all js files form vite build
+*.js
+*.tsbuildinfo
