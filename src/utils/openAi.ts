@@ -1,6 +1,6 @@
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
-const url = "http://localhost:3000/api/convo/ask";
+const url = "/api/convo/ask";
 
 async function streamOpenAI({
     query,
