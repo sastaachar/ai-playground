@@ -24,7 +24,7 @@ const Stackblitz: React.FC<StackblitzProps> = ({ code = '' }) => {
             },
             {
               ...STACKBLITZ_EMBED_OPTIONS,
-            }
+            },
           );
           stackblitzVmRef.current = vm;
         } catch (error) {
@@ -39,10 +39,9 @@ const Stackblitz: React.FC<StackblitzProps> = ({ code = '' }) => {
   useEffect(() => {
     if (stackblitzVmRef.current) {
       try {
-        console.log("code", code);
         stackblitzVmRef.current.applyFsDiff({
           create: {
-            'src/App.tsx': code || appTemplate,
+            'index.js': code
           },
           destroy: [],
         }).catch((error: Error) => console.error('Error updating file:', error));

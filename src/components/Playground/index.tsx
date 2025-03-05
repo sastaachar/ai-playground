@@ -3,38 +3,19 @@ import "./index.css";
 import { askApi } from "../../utils/openAi";
 import { ProChat } from "@ant-design/pro-chat";
 import { Editor } from "@monaco-editor/react";
+import { Button } from "antd";
 import { FaPlayCircle } from "react-icons/fa";
 import { VscRunAll } from "react-icons/vsc";
 import { GrDeploy } from "react-icons/gr";
+import { PiBracketsCurlyLight } from "react-icons/pi";
 
 interface ChatBoxProps {
-  setShowPreview: (show: boolean) => void;
+  setShowPreview: (show: any) => void;
   setCurrentCode: (code: string) => void;
+  setShowRestSDK: (show: any) => void;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode }) => {
-  const handleStreamResponse = (text: string) => {
-    if (!text.includes("data:")) return text;
-
-    let result = "";
-    const chunks = text.split("data:");
-
-    for (const chunk of chunks) {
-      const payload = chunk.trim();
-      if (!payload || payload === "[DONE]") continue;
-
-      try {
-        const data = JSON.parse(chunk);
-        result += data?.choices?.[0]?.delta?.content || "";
-      } catch (e) {
-        console.log("Failed to parse chunk:", chunk);
-        return "...";
-      }
-    }
-
-    return result;
-  };
-
+const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setShowRestSDK }) => {
   const renderCodeEditor = ({ children }: { children: any }) => (
     <>
       <Editor
@@ -47,13 +28,17 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode }) => 
             enabled: false
           },
           scrollBeyondLastLine: false,
+          inDiffEditor: false,
+          readOnly: true,
         }}
+
+
       />
       <div className="editor-actions">
         <button
           className="run-button"
           onClick={() => {
-            setShowPreview(prev => !prev);
+            setShowPreview(true);
             setCurrentCode((children[0] as any).props.children[0]);
           }}
         >
@@ -120,10 +105,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode }) => 
         return await askApi(lastMessage);
       }}
       locale="en-US"
-      transformToChatMessage={handleStreamResponse}
       actions={{
         render: (defaultDoms) => [
           previewToggle(),
+          <PiBracketsCurlyLight className="rest-sdk-toggle" onClick={() => setShowRestSDK(prev => !prev)} />,
           ...defaultDoms
         ]
       }}

@@ -161,8 +161,20 @@ h1{
   display: flex;
 }
 
-.preview-toggle{
+.preview-toggle, .rest-sdk-toggle{
   width: 24px;
   height: 24px;
   color: black;
+}
+
+iframe nav{
+  display: none;
+}
+
+.rest-sdk-toggle{
+  font-size: 24px;
+  background-color: black;
+  padding: 4px;
+  color: white;
+  border-radius: 4px;
 }

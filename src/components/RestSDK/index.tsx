@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
 import { IconButton, Typography, Card, Tooltip } from '@mui/material';
 import { CheckCircle, Error, ContentCopy, Replay } from '@mui/icons-material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -119,43 +118,47 @@ const CurlVisualizer = ({ curlCommand }) => {
   };
 
   return (
-    <Grid container spacing={2} sx={{ p: 4, height: '100vh' }}>
-      <Card sx={{ p: 3, overflow: 'auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
-          <Typography variant="h6">Request</Typography>
+    <Grid container spacing={2} sx={{ p: 2, maxHeight: '100vh',  }}>
+      <Card sx={{ p: 1, overflow: 'auto', width: '100%' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <p style={{ fontSize: '16px' }}>Request</p>
           <Tooltip title="Re-run">
             <IconButton onClick={() => executeRequest(editedCurl)}>
-              <Replay />
+              <Replay style={{ width: '15px', height: '15px' }}/>
             </IconButton>
           </Tooltip>
-          <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
-            <Typography variant="body2" color="text.secondary">
-              {responseTime}ms
-            </Typography>
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: 4 }}>
+            <p style={{ fontSize: '12px' }}>{responseTime}ms</p>
           </div>
         </div>
 
         <SyntaxHighlighter 
           language="bash"
           style={atomDark}
+          customStyle={{
+            fontSize: '12px',
+            fontFamily: "'Fira Code', monospace",
+            borderRadius: '4px',
+            padding: '12px',
+            width:'100%',
+          }}
           contentEditable
           onBlur={(e) => setEditedCurl(e.target.textContent)}
         >
           {editedCurl}
         </SyntaxHighlighter>
       </Card>
-      <Grid sx={{ width: '100%' }} container spacing={2}>
-        <Grid size={8}>
-        <Card sx={{ p: 3, overflow: 'scroll', backgroundColor: 'inherit' }}>
+      <Grid >
+        <Card sx={{ p: 1, overflow: 'scroll', backgroundColor: 'inherit' }}>
             {activeEntry && (
             <>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                 {history.find(e => e.id === activeEntry)?.success ? (
-                    <CheckCircle color="success" />
+                    <CheckCircle color="success" style={{ width: '15px', height: '15px' }} />
                 ) : (
-                    <Error color="error" />
+                    <Error color="error" style={{ width: '15px', height: '15px' }} />
                 )}
-                <Typography variant="h6">
+                <Typography variant="h6" style={{ fontSize: '16px' }}>
                     Response - {history.find(e => e.id === activeEntry)?.response.status}
                 </Typography>
                 <IconButton
@@ -164,7 +167,7 @@ const CurlVisualizer = ({ curlCommand }) => {
                     responseData
                     )}
                 >
-                    <ContentCopy />
+                    <ContentCopy style={{ width: '15px', height: '15px' }}/>
                 </IconButton>
                 </div>
                 <div style={{ overflowY: 'auto', maxHeight: '60vh' }}>
@@ -173,6 +176,13 @@ const CurlVisualizer = ({ curlCommand }) => {
                     language="json"
                     style={atomDark}
                     showLineNumbers
+                    customStyle={{
+                      fontSize: '12px',
+                      fontFamily: "'Fira Code', monospace",
+                      borderRadius: '4px',
+                      padding: '12px',
+                      width:'100%',
+                    }}
                     >
                     {history.find(e => e.id === activeEntry)?.response.data || ''}
                     </SyntaxHighlighter>
@@ -181,11 +191,10 @@ const CurlVisualizer = ({ curlCommand }) => {
             )}
         </Card>
         </Grid>
-
-        <Grid size={4}>
-        <Card>
-            <Typography variant="h6" gutterBottom color="text.secondary">History</Typography>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, overflowY: 'auto', maxHeight: '60vh', overflowX: 'hidden' }}>
+        <Grid  style={{ width: '98%', height: '80%' }}>
+        <Card sx={{ p: 1, overflow: 'scroll', backgroundColor: 'inherit', width: '100%' }}>
+            <Typography variant="h6" gutterBottom color="text.secondary" style={{ fontSize: '16px' }}>History</Typography>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, overflowY: 'auto', maxHeight: '60vh', overflowX: 'hidden' }}>
             {history.map((entry) => (
                 <motion.div
                 key={entry.id}
@@ -195,13 +204,13 @@ const CurlVisualizer = ({ curlCommand }) => {
                 <Card 
                     sx={{ 
                     width: '90%',
-                    p: 2,
+                    p: 1,
                     cursor: 'pointer',
                     backgroundColor: activeEntry === entry.id ? 'action.hover' : 'background.paper'
                     }}
                     onClick={() => setActiveEntry(entry.id)}
                 >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     {entry.success ? (
                         <CheckCircle color="success" fontSize="small" />
                     ) : (
@@ -231,7 +240,7 @@ const CurlVisualizer = ({ curlCommand }) => {
             </div>
         </Card>
         </Grid>
-    </Grid>
+      
     </Grid>
   );
 };

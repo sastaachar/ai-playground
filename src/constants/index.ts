@@ -7,6 +7,9 @@ const STACKBLITZ_FILE_OPTIONS = {
     files: {
         'index.html': `
             <script src="index.js"></script>
+            <style>
+                ${stylesCssTemplate}
+            </style>
             <div id="your-own-div" style="width: 100%; height: 100%;"></div>`,
         'index.js': appTemplate,
         'styles.css': stylesCssTemplate
@@ -20,11 +23,11 @@ const STACKBLITZ_EMBED_OPTIONS = {
     height: '100%',
     hideExplorer: true,
     hideNavigation: true,
-    view: 'preview' as UiViewOption,
-    openFile: 'src/App.tsx',
+    view: 'editor' as UiViewOption,
+    openFile: 'index.js',
     terminalHeight: 0,
     hideDevTools: true,
-    
 }
+
 
 export { STACKBLITZ_FILE_OPTIONS, STACKBLITZ_EMBED_OPTIONS };
