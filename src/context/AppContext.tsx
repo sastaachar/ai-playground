@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { JS_HOST, JS_PASSWORD } from "../constants";
 import { JS_USERNAME } from "../constants";
 
@@ -21,8 +21,6 @@ export const AppContext = createContext({
     const [username, setUsername] = useState('');
     const [token, setToken] = useState('');
   
-    // - host - apna cluster if banda not in tthoughtspot cluster.
-    // if url not giving host, then take customer input.
     useEffect(() => {
         if(window.top !== window.self) {
             try {
@@ -50,7 +48,6 @@ export const AppContext = createContext({
                 }
                 fetchUserToken();
     
-                console.log("set kr dia token: ", authTokenData, js_token);
             } catch (error) {
                 console.error("Could not get the token:", error);
             }
@@ -100,17 +97,13 @@ export const AppContext = createContext({
                         setUsername(userData.name);
                         js_username = userData.name;
                     }
-
-                    console.log("set kr dia username: ", js_username);
                 } catch (error) {
-                    console.error("Error fetching user data:", error);
                 }
             };
             
             fetchCurrentUser();
         }
     }, [token, host]);
-
 
     return (
       <AppContext.Provider value={{ host, username, token, setHost, setUsername, setToken }}>

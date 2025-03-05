@@ -48,7 +48,6 @@ const parseCurl = (curl) => {
 
 const CurlVisualizer = ({ curlCommand }) => {
   const {token} = useAppContext();
-  console.log("token aa gya : ", token);
   const [history, setHistory] = useState([]);
   const [activeEntry, setActiveEntry] = useState(null);
   const [editedCurl, setEditedCurl] = useState(curlCommand);
@@ -61,7 +60,6 @@ const CurlVisualizer = ({ curlCommand }) => {
   }, []);
 
   useEffect(() => {
-    console.log(curlCommand);
     if (curlCommand) {
       setEditedCurl(curlCommand);
       executeRequest(curlCommand);
@@ -78,7 +76,6 @@ const CurlVisualizer = ({ curlCommand }) => {
         headers: fetchHeaders,
         body: method !== 'GET' ? body : null
       });
-      console.log("This is response", response);
       const data = await response.text();
       setResponseData(data);
       const newEntry = {

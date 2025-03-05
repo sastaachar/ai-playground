@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import sdk from '@stackblitz/sdk';
+import sdk, { UiViewOption } from '@stackblitz/sdk';
 import appTemplate from '../../templates/App.js?raw';
 import { STACKBLITZ_EMBED_OPTIONS, STACKBLITZ_FILE_OPTIONS } from '../../constants';
 
 interface StackblitzProps {
   code?: string;
+  type?: 'deployment' | 'editor';
 }
 
-const Stackblitz: React.FC<StackblitzProps> = ({ code = '' }) => {
+const Stackblitz: React.FC<StackblitzProps> = ({ code = '' , type = 'embed'}) => {
   const embedRef = useRef<HTMLDivElement>(null);
   const stackblitzVmRef = useRef<any>(null);
 
@@ -21,9 +22,16 @@ const Stackblitz: React.FC<StackblitzProps> = ({ code = '' }) => {
               ...STACKBLITZ_FILE_OPTIONS,
               title: 'ThoughtSpot Embed',
               template: 'javascript',
+              files: {
+                'index.html': `
+                    <script src="index.js"></script>
+                    <div id="your-own-div" style="width: 100%; height: 100%;"></div>`,
+                'index.js': code || appTemplate
+              },
             },
             {
               ...STACKBLITZ_EMBED_OPTIONS,
+              view: type === 'deployment' ? 'preview' as UiViewOption : 'editor' as UiViewOption,
             },
           );
           stackblitzVmRef.current = vm;
@@ -41,7 +49,7 @@ const Stackblitz: React.FC<StackblitzProps> = ({ code = '' }) => {
       try {
         stackblitzVmRef.current.applyFsDiff({
           create: {
-            'index.js': code
+            'index.js': code 
           },
           destroy: [],
         }).catch((error: Error) => console.error('Error updating file:', error));

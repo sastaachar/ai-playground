@@ -3,15 +3,14 @@ import './App.css';
 import Home from './components/Home';
 import { useLocation } from 'react-router-dom';
 import Stackblitz from './components/Stackblitz';
+import { Deployment } from './components/Deployment';
 
 const App: React.FC = () => {
   const location = useLocation();
   const params = location.pathname.split('/').filter(item => item !== '')
-  console.log(params)
-
-  
+  console.log("params", params);
   return params.length > 1 ? (
-    <Stackblitz />
+    <Deployment deploymentId={params[1]} />
   ) : (
     <div className="App">
       <div className="header">

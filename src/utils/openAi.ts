@@ -83,11 +83,12 @@ function parseEventData(data: string) {
 }
   
 
-const askApi = (query: string) => {
+const askApi = (query: string, prevMessage: any) => {
   return fetch(url, {
     body: 
        JSON.stringify({
         query: query,
+        prevMessage: prevMessage
       }),
     method: "POST",
     headers: {

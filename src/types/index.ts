@@ -13,3 +13,9 @@ export type Message = {
 export interface PlaygroundProps {
     onCodeChange?: (code: string) => void;
   }
+
+  export enum DeploymentType {
+    VisualEmbedJS="VisualEmbedJS",
+    Other="Other",
+    RestApi="RestApi",
+  }
