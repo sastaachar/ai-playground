@@ -12,7 +12,7 @@
     "prisma:generate": "npx prisma generate --schema=server/db/prisma/prisma.schema",
     "prisma:migrate": "npx prisma migrate dev --schema=server/db/prisma/prisma.schema",
     "prisma:push": "npx prisma db push --schema=server/db/prisma/prisma.schema",
-    "update-rest-api": "tsx ./server/update-rest-api.ts"
+    "update-rest-api": "tsx --env-file='./.env' ./server/update-rest-api.ts"
   },
   "dependencies": {
     "@ai-sdk/azure": "^1.1.15",
