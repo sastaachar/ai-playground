@@ -93,7 +93,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setSh
     return (
       <FaPlayCircle
         className="preview-toggle"
-        onClick={() => setShowPreview(prev => !prev)}
+        onClick={() => {setShowPreview(prev => !prev); setShowRestSDK(false)}}
       />
     );
   };
@@ -108,7 +108,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setSh
       actions={{
         render: (defaultDoms) => [
           previewToggle(),
-          <PiBracketsCurlyLight className="rest-sdk-toggle" onClick={() => setShowRestSDK(prev => !prev)} />,
+          <PiBracketsCurlyLight className="rest-sdk-toggle" onClick={() => {setShowRestSDK(prev => !prev); setShowPreview(false)}} />,
           ...defaultDoms
         ]
       }}
