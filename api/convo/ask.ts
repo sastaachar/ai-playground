@@ -1,4 +1,4 @@
-import { convoAsk } from "../../server/handlers";
+import { convoAsk } from "../../server/handlers/serverlessHandlers.js";
 
 
 /**
