@@ -84,10 +84,12 @@ function parseEventData(data: string) {
   
 
 const askApi = (query: string, prevMessage: any) => {
+  const isDebug = window.location.href.includes('debug=true');
   return fetch(url, {
     body: 
        JSON.stringify({
         query: query,
+        direct: isDebug,
         prevMessage: prevMessage
       }),
     method: "POST",

@@ -1,4 +1,4 @@
-import { AI_MODEL } from "./types.js";
+import { AI_MODEL, EMBEDDING_MODEL } from "./types.js";
 
 /**
  * @property {number} TEMPERATURE - Controls randomness in AI responses.
@@ -47,7 +47,13 @@ export const config = {
         API_LINK: process.env.AI_API_LINK_O3_MINI || '',
         API_KEY: process.env.AI_API_KEY_O3_MINI || '',
       },
+      [EMBEDDING_MODEL.TEXT_EMBEDDING_3_LARGE]: {
+        API_LINK: process.env.AI_API_LINK_TEXT_EMBEDDING_3_LARGE || '',
+        API_KEY: process.env.AI_API_KEY_TEXT_EMBEDDING_3_LARGE || '',
+      },
     },
+    DEFAULT_EMBEDDING_MODEL_KEY: process.env.AI_DEFAULT_EMBEDDING_MODEL_KEY || '',
+    DEFAULT_EMBEDDING_MODEL_LINK: process.env.AI_DEFAULT_EMBEDDING_MODEL_LINK || '',
     STREAM: process.env.AI_STREAM === 'true',
   },
 } as const;

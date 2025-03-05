@@ -8,9 +8,13 @@ export  async function ask(request: Request) {
     const body = await request.json();
     if (!body.query) throw new Error('No query provided');
 
-    const { query, model, prevMessage } = body;
+    const { query, model, prevMessage, direct } = body;
     const messageWithContext = addSimpleContext(query);
 
+    if (direct) {
+      // for debugging
+      return getGPTResponse(getSimpleMessages(query, null, { direct }), model);
+    } 
 
     const messages = getSimpleMessages(messageWithContext, prevMessage);
 

@@ -1,3 +1,5 @@
+import exp from "constants"
+
 export enum AI_MODEL {
   GPT_4O_MINI = 'gpt-4o-mini',
   GPT_4O = 'gpt-4o',
@@ -5,6 +7,11 @@ export enum AI_MODEL {
   GPT_O1_MINI = 'o1-mini',
   GPT_O3_MINI = 'o3-mini',
 }
+
+export enum EMBEDDING_MODEL {
+  TEXT_EMBEDDING_3_LARGE = 'text-embedding-3-large',
+}
+
 export enum Role {
   User = 'user',
   System = 'system',
