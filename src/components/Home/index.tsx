@@ -35,7 +35,7 @@ const Home: React.FC = () => {
     const key = `open${Date.now()}`;
     const btn = (
       <Space>
-        <Button type="link" size="small" onClick={() => window.open(`http://localhost:5173/deployment/${id}`, '_blank')}>
+        <Button type="link" size="small" onClick={() => window.open(`/deployment/${id}`, '_blank')}>
           Go to Deployment
         </Button>
       </Space>

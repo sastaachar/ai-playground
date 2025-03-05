@@ -6,7 +6,7 @@ export const Deployment: React.FC<{deploymentId: string}> = ({deploymentId}) => 
 
     useEffect(() => {
         const fetchDeployment = async () => {
-            const response = await fetch(`http://localhost:5173/api/deployment/get`, {
+            const response = await fetch(`/api/deployment/get`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
