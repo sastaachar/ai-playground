@@ -127,3 +127,42 @@ h1{
   background-color: #404040;
   border-color: #505050;
 }
+
+.ant-pro-chat-message-content {
+  text-align: left;
+}
+
+.ant-editor-highlight-container{
+  background-color: #007bff;
+}
+
+
+.ant-pro-chat-input-area{
+  background-image: none !important;
+}
+
+.ant-pro-chat-chat-list-container{
+  height: 100%;
+}
+
+.run-button, .deploy-button{
+  cursor: pointer;
+    padding: 8px;
+    margin-right: 8px;
+    color: white;
+    background: black;
+    margin-top: 4px;
+    width: 50px;
+    display: flex ;
+    justify-content: center;
+}
+
+.editor-actions{
+  display: flex;
+}
+
+.preview-toggle{
+  width: 24px;
+  height: 24px;
+  color: black;
+}

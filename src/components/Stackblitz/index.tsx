@@ -39,6 +39,7 @@ const Stackblitz: React.FC<StackblitzProps> = ({ code = '' }) => {
   useEffect(() => {
     if (stackblitzVmRef.current) {
       try {
+        console.log("code", code);
         stackblitzVmRef.current.applyFsDiff({
           create: {
             'src/App.tsx': code || appTemplate,
