@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { JS_HOST, JS_PASSWORD } from "../constants";
+import { JS_USERNAME } from "../constants";
 
 
 let js_username = "";
@@ -22,37 +24,64 @@ export const AppContext = createContext({
     // - host - apna cluster if banda not in tthoughtspot cluster.
     // if url not giving host, then take customer input.
     useEffect(() => {
-        try {
-            if (window.location?.href) {
-                const url = new URLSearchParams(window.location.href);
-                setHost(url.get('tsHost'));
-                js_host = url.get('tsHost');
+        if(window.top !== window.self) {
+            try {
+                if (window.location?.href) {
+                    const url = new URLSearchParams(window.location.href);
+                    setHost(url.get('tsHost'));
+                    js_host = url.get('tsHost');
+                }
+    
+                // TODO : get auth token from url params proper format
+                let authTokenData;
+                const fetchUserToken = async () => {
+    
+                    authTokenData = await fetch(`${js_host}/callosum/v1/v2/auth/token/fetch`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'GET',
+                        credentials: 'include',
+                    });
+    
+                    const data = await authTokenData.json();
+                    setToken(data.data.token);
+                    js_token = data.data.token;
+                }
+                fetchUserToken();
+    
+                console.log("set kr dia token: ", authTokenData, js_token);
+            } catch (error) {
+                console.error("Could not get the token:", error);
             }
-            console.log("set kr dia host: ", host, js_host);
-
-            // TODO : get auth token from url params proper format
+        } else {
+            js_host = JS_HOST;
+            setHost(js_host);
             let authTokenData;
             const fetchUserToken = async () => {
-
-                authTokenData = await fetch(`${js_host}/callosum/v1/v2/auth/token/fetch`, {
+    
+                authTokenData = await fetch(`${js_host}/api/rest/2.0/auth/token/full`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    method: 'GET',
+                    method: 'POST',
                     credentials: 'include',
+                    body: JSON.stringify({
+                        username: JS_USERNAME,
+                        password: JS_PASSWORD,
+                        validity_in_seconds: 99999
+                    })
                 });
 
                 const data = await authTokenData.json();
-                console.log("data: ", data);
-                setToken(data.data.token);
-                js_token = data.data.token;
+                setToken(data.token);
+                js_token = data.token;
             }
-            fetchUserToken();
-
-            console.log("set kr dia token: ", authTokenData, js_token);
-        } catch (error) {
-            console.error("Could not get the token:", error);
+            fetchUserToken(); 
+            js_username = JS_USERNAME;
+            setUsername(JS_USERNAME);
         }
+        
     }, []);
 
     useEffect(() => {
