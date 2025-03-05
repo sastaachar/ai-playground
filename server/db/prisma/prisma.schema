@@ -1,0 +1,27 @@
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+  // uncomment next line if you use Prisma <5.10
+  // directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+enum DeploymentType {
+  VisualEmbedJS
+  Other
+  RestApi
+}
+
+model Deployment {
+  id        String  @id @default(uuid()) // Auto-generated unique ID
+  username  String? // Optional
+  host      String? // Optional
+  code      String? @db.Text // Optional large text storage
+  type     DeploymentType? // Optional enum
+  createdAt DateTime @default(now()) // Auto-generated timestamp
+  updatedAt DateTime @updatedAt // Auto-generated timestamp
+}
+
+generator client {
+  provider = "prisma-client-js"
+}

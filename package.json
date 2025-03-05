@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prisma:generate": "npx prisma generate --schema=server/db/prisma/prisma.schema",
+    "prisma:migrate": "npx prisma migrate dev --schema=server/db/prisma/prisma.schema",
+    "prisma:push": "npx prisma db push --schema=server/db/prisma/prisma.schema"
   },
   "dependencies": {
     "@ai-sdk/azure": "^1.1.15",
@@ -19,6 +22,7 @@
     "@monaco-editor/react": "^4.7.0",
     "@mui/icons-material": "^6.4.6",
     "@mui/material": "^6.4.6",
+    "@prisma/client": "^6.4.1",
     "@stackblitz/sdk": "^1.11.0",
     "@thoughtspot/rest-api-sdk": "^2.12.0",
     "@thoughtspot/visual-embed-sdk": "^1.36.1",
@@ -29,7 +33,10 @@
     "axios": "^1.8.1",
     "curl-parser": "^0.0.2",
     "framer-motion": "^12.4.10",
+    "lodash": "^4.17.21",
+    "mongodb": "^6.14.2",
     "openai": "^4.86.1",
+    "prisma": "^6.4.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-icons": "^5.5.0",
