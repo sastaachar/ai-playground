@@ -20,7 +20,6 @@ async function start(request: Request) {
     const { query, model, prevMessage } = body;
     const messageWithContext = addSimpleContext(query);
 
-    console.log(messageWithContext);
 
     const messages = getSimpleMessages(messageWithContext, prevMessage);
 

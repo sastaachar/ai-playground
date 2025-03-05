@@ -13,7 +13,6 @@ async function streamOpenAI({
     onChunk?: (chunk: any) => void;
     onComplete?: () => void;
   }) {
-    console.log("i am called");
     const abortController = new AbortController();
     const { signal } = abortController;
     let content = "";
@@ -44,7 +43,6 @@ async function streamOpenAI({
         try {
           const chunk = parseEventData(e.data);
           content += chunk?.choices?.[0].delta?.content|| "";
-          console.log(chunk.content)
           onData(content);
           onChunk?.(chunk);
   
@@ -56,10 +54,9 @@ async function streamOpenAI({
         }
       },
       onclose: () => {
-        console.log("closed");
          },
       onerror: (e) => {
-        console.log(e);
+
         throw new Error("a")
       },
       onopen: async () => {
@@ -68,7 +65,6 @@ async function streamOpenAI({
           onComplete?.();
           throw new Error("Failed to connect to the server");
         }
-        console.log("opened");
       },
       signal,
     });

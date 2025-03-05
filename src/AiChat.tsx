@@ -14,13 +14,11 @@ const parseEventData = (data: string) => {
 
   try {
     const obj = JSON.parse(data);
-    console.log(obj);
     return {
       done: false,
       content: obj.choices?.[0]?.delta?.content as string,
     };
   } catch (e) {
-    console.log("no partse", data);
   }
 };
 

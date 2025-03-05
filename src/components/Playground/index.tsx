@@ -4,6 +4,7 @@ import { PlaygroundProps, Message, Sender } from "../../types";
 import { askApi, streamOpenAI } from "../../utils/openAi";
 import { v4 as uuidv4 } from "uuid";
 import { ProChat } from "@ant-design/pro-chat";
+import { Editor } from "@monaco-editor/react";
 
 const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -150,32 +151,42 @@ const NewChat = () => {
       }}
       transformToChatMessage={(text) => {
         // not a data chunk
-        if (!text.includes('data:')) {
+        if (!text.includes("data:")) {
           return text;
         }
-        
-        let result = '';
-        
-        const chunks = text.split('data:');
-        
+
+        let result = "";
+
+        const chunks = text.split("data:");
+
         for (const chunk of chunks) {
           const payload = chunk.trim();
-          if (!payload || payload === '[DONE]') continue;
-          
+          if (!payload || payload === "[DONE]") continue;
+
           try {
-            const data = JSON.parse(payload);
-            const content = data?.choices?.[0]?.delta?.content;
-            if (content) result += content;
+            const data = JSON.parse(chunk);
+            result +=  data?.choices?.[0]?.delta?.content || "";
           } catch (e) {
-            // JSON parse failed, ( due to split json)
-            const contentMatch = payload.match(/"delta":\s*{\s*"content":\s*"([^"]*)"/);
-            if (contentMatch && contentMatch[1]) {
-              result += contentMatch[1];
-            }
+            console.log("failed to parse ", chunk);
+            // @prashant fix this asap
+            return "...";
           }
         }
-        
+
         return result;
+      }} 
+      markdownProps={{
+        components: {
+          pre: ({ children }) => (
+            <Editor
+              defaultLanguage="javascript"
+              height="50vh"
+              defaultValue={"LET HIM COOK 🔥🔥🔥"}
+              value={(children[0] as any).props.children[0]}
+              theme="vs-dark"
+            />
+          ),
+        },
       }}
     />
   );
