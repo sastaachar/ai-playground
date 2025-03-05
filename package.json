@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "postinstall": "pnpm prisma:generate",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && pnpm prisma:generate",
     "lint": "eslint .",
     "preview": "vite preview",
     "prisma:generate": "npx prisma generate --schema=server/db/prisma/prisma.schema",
