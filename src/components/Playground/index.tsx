@@ -167,7 +167,6 @@ const NewChat = () => {
             const content = data?.choices?.[0]?.delta?.content;
             if (content) result += content;
           } catch (e) {
-            console.log("JSON parse error:", e.message, "[Data] :::", text);
             // JSON parse failed, ( due to split json)
             const contentMatch = payload.match(/"delta":\s*{\s*"content":\s*"([^"]*)"/);
             if (contentMatch && contentMatch[1]) {
