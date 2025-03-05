@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+
+let js_username = "";
+let js_host = "";
+let js_token = "";
+
 export const AppContext = createContext({
     host:'',
     username: '',
@@ -14,15 +19,39 @@ export const AppContext = createContext({
     const [username, setUsername] = useState('');
     const [token, setToken] = useState('');
   
-
+    // - host - apna cluster if banda not in tthoughtspot cluster.
+    // if url not giving host, then take customer input.
     useEffect(() => {
         try {
-            if (window.top?.location?.href) {
-                const url = new URL(window.top.location.href);
-                setHost(url.origin);
+            if (window.location?.href) {
+                const url = new URLSearchParams(window.location.href);
+                setHost(url.get('tsHost'));
+                js_host = url.get('tsHost');
             }
+            console.log("set kr dia host: ", host, js_host);
+
+            // TODO : get auth token from url params proper format
+            let authTokenData;
+            const fetchUserToken = async () => {
+
+                authTokenData = await fetch(`${js_host}/callosum/v1/v2/auth/token/fetch`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'GET',
+                    credentials: 'include',
+                });
+
+                const data = await authTokenData.json();
+                console.log("data: ", data);
+                setToken(data.data.token);
+                js_token = data.data.token;
+            }
+            fetchUserToken();
+
+            console.log("set kr dia token: ", authTokenData, js_token);
         } catch (error) {
-            console.error("Could not access window.top.location:", error);
+            console.error("Could not get the token:", error);
         }
     }, []);
 
@@ -40,7 +69,10 @@ export const AppContext = createContext({
                     if (response.ok) {
                         const userData = await response.json();
                         setUsername(userData.name);
+                        js_username = userData.name;
                     }
+
+                    console.log("set kr dia username: ", js_username);
                 } catch (error) {
                     console.error("Error fetching user data:", error);
                 }

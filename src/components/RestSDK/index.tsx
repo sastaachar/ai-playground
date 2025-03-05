@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { motion } from 'framer-motion';
 import Grid from '@mui/material/Grid2';
 import curlParser from 'curl-parser';
+import { useAppContext } from '../../context/AppContext';
 
 
 function convertHeaders(headersArray) {
@@ -46,6 +47,8 @@ const parseCurl = (curl) => {
   };
 
 const CurlVisualizer = ({ curlCommand }) => {
+  const {token} = useAppContext();
+  console.log("token aa gya : ", token);
   const [history, setHistory] = useState([]);
   const [activeEntry, setActiveEntry] = useState(null);
   const [editedCurl, setEditedCurl] = useState(curlCommand);
@@ -69,10 +72,6 @@ const CurlVisualizer = ({ curlCommand }) => {
     const start = Date.now();
     try {
       const { method, url, headers, body } = parseCurl(curl);
-      console.log("This is method", method);
-      console.log("This is url", url);
-      console.log("This is headers", headers);
-      console.log("This is body", body);
       const fetchHeaders = convertHeaders(headers);
       const response = await fetch(url, {
         method,
@@ -82,7 +81,6 @@ const CurlVisualizer = ({ curlCommand }) => {
       console.log("This is response", response);
       const data = await response.text();
       setResponseData(data);
-      console.log("This is data", data);
       const newEntry = {
         id: uuidv4(),
         curl,
