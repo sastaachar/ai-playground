@@ -129,6 +129,41 @@ const ChatGPT: React.FC<PlaygroundProps> = ({ onCodeChange }) => {
   );
 };
 
+const DONE_TEXT = "[DONE]";
+const getContentFromChunk = (chunk: string) => {
+  const jsonString = chunk.replace(/^data: /, "");
+  if (jsonString === DONE_TEXT || !jsonString) return "";
+
+  try {
+    const json = JSON.parse(jsonString);
+    return json.choices[0]?.delta.content;
+  } catch {
+    console.error("Error parsing Chunk:", jsonString);
+    return "...";
+  }
+};
+
+const CHUNK_DELIMITER = "\n\n";
+const getChunkParser = () => {
+  let unProcessedText = "";
+  const parser = (text: string) => {
+    const isValidChunk = text.endsWith(CHUNK_DELIMITER);
+    if (!isValidChunk) {
+      unProcessedText += text;
+      return "";
+    }
+
+    const totalText = unProcessedText + text;
+    unProcessedText = "";
+
+    const chunks = totalText.split(CHUNK_DELIMITER);
+    const content = chunks.map(getContentFromChunk).join("");
+    return content;
+  };
+
+  return parser;
+};
+
 const NewChat = () => {
   return (
     <ProChat
@@ -149,32 +184,7 @@ const NewChat = () => {
           return A;
         },
       }}
-      transformToChatMessage={(text) => {
-        // not a data chunk
-        if (!text.includes("data:")) {
-          return text;
-        }
-
-        let result = "";
-
-        const chunks = text.split("data:");
-
-        for (const chunk of chunks) {
-          const payload = chunk.trim();
-          if (!payload || payload === "[DONE]") continue;
-
-          try {
-            const data = JSON.parse(chunk);
-            result +=  data?.choices?.[0]?.delta?.content || "";
-          } catch (e) {
-            console.log("failed to parse ", chunk);
-            // @prashant fix this asap
-            return "...";
-          }
-        }
-
-        return result;
-      }} 
+      transformToChatMessage={getChunkParser()}
       markdownProps={{
         components: {
           pre: ({ children }) => (
