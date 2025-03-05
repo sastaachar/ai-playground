@@ -1,4 +1,4 @@
-import { AI_MODEL } from "./types";
+import { AI_MODEL } from "./types.js";
 
 /**
  * @property {number} TEMPERATURE - Controls randomness in AI responses.

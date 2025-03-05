@@ -1,4 +1,4 @@
-import { Message, Role } from "../types";
+import { Message, Role } from "../types.js";
 
 const DEFAULT_SYSTEM_MESSAGE = "You are helpful assistant to web developers, trying to embed Thoughtspot in their application.";
 

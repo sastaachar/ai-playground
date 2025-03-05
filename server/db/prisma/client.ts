@@ -1,9 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+// import { withAccelerate } from '@prisma/extension-accelerate'
 
-let prisma: PrismaClient;
+const prisma = new PrismaClient();
 export const getDbClient = () => {
-  if (!prisma) {
-    prisma = new PrismaClient();
-  }
   return prisma;
 }

@@ -1,6 +1,6 @@
-import { getDbClient } from "../db/prisma/client";
-import omitBy from "lodash/omitBy";
-import isUndefined from "lodash/isUndefined";
+import { getDbClient } from "../db/prisma/client.js";
+import omitBy from "lodash/omitBy.js";
+import isUndefined from "lodash/isUndefined.js";
 export const getAllDeployments = async (req: Request) => {
   const { username, host } = await req.json();
 
@@ -22,7 +22,7 @@ export const getAllDeployments = async (req: Request) => {
 export const createDeployment = async (req: Request) => {
   const body = await req.json();
 
-  const requiredFields = ['username', 'model', 'code', 'type', 'host'];
+  const requiredFields = ['username', 'code', 'type', 'host'];
   const missingFields = requiredFields.filter(field => !(field in body));
 
   if (missingFields.length > 0) {
@@ -57,4 +57,34 @@ export const updateDeployment = async (req: Request) => {
     });
 
     return new Response(JSON.stringify(deployment), { status: 200 });
+}
+
+export const getDeployment = async (req: Request) => {
+  const { id } = await req.json();
+
+  if (!id) {
+    return new Response('Deployment ID is required', { status: 400 });
+  }
+
+  const prisma = getDbClient();
+  const deployment = await prisma.deployment.findUnique({
+    where: { id }
+  });
+
+  return new Response(JSON.stringify(deployment), { status: 200 }); 
+} 
+
+export const deleteDeployment = async (req: Request) => {
+  const { id } = await req.json();
+
+  if (!id) {
+    return new Response('Deployment ID is required', { status: 400 });
+  }
+
+  const prisma = getDbClient();
+  const deployment = await prisma.deployment.delete({
+    where: { id }
+  });
+
+  return new Response(JSON.stringify(deployment), { status: 200 });
 }

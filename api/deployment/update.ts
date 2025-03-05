@@ -1,7 +1,5 @@
-import { updateDeployment } from "../../server/handlers";
+import { updateDeployment } from "../../server/handlers/index.js";
+import { allowCors } from "../../server/cors-handler.js";
 
-export default updateDeployment;
-
-export const config = {
-  runtime: 'edge',
-}
+export const POST = updateDeployment; 
+export const OPTIONS = allowCors(() => {});

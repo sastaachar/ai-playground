@@ -1,6 +1,6 @@
-import { addSimpleContext } from "../../context-provider/get-simple-context";
-import { getSimpleMessages } from "../../message-creation/simple-message";
-import { getGPTResponse } from "../../open-ai";
+import { addSimpleContext } from "../../context-provider/get-simple-context.js";
+import { getSimpleMessages } from "../../message-creation/simple-message.js";
+import { getGPTResponse } from "../../open-ai.js";
 
 export  async function ask(request: Request) {
 
