@@ -77,9 +77,6 @@ dependencies:
   openai:
     specifier: ^4.86.1
     version: 4.86.1(zod@3.24.2)
-  prisma:
-    specifier: ^6.4.1
-    version: 6.4.1(typescript@5.7.3)
   react:
     specifier: ^18.0.0
     version: 18.3.1
@@ -124,6 +121,9 @@ devDependencies:
   globals:
     specifier: ^15.15.0
     version: 15.15.0
+  prisma:
+    specifier: ^6.4.1
+    version: 6.4.1(typescript@5.7.3)
   typescript:
     specifier: ~5.7.2
     version: 5.7.3
@@ -1493,11 +1493,9 @@ packages:
 
   /@prisma/debug@6.4.1:
     resolution: {integrity: sha512-Q9xk6yjEGIThjSD8zZegxd5tBRNHYd13GOIG0nLsanbTXATiPXCLyvlYEfvbR2ft6dlRsziQXfQGxAgv7zcMUA==}
-    dev: false
 
   /@prisma/engines-version@6.4.0-29.a9055b89e58b4b5bfb59600785423b1db3d0e75d:
     resolution: {integrity: sha512-Xq54qw55vaCGrGgIJqyDwOq0TtjZPJEWsbQAHugk99hpDf2jcEeQhUcF+yzEsSqegBaDNLA4IC8Nn34sXmkiTQ==}
-    dev: false
 
   /@prisma/engines@6.4.1:
     resolution: {integrity: sha512-KldENzMHtKYwsOSLThghOIdXOBEsfDuGSrxAZjMnimBiDKd3AE4JQ+Kv+gBD/x77WoV9xIPf25GXMWffXZ17BA==}
@@ -1507,7 +1505,6 @@ packages:
       '@prisma/engines-version': 6.4.0-29.a9055b89e58b4b5bfb59600785423b1db3d0e75d
       '@prisma/fetch-engine': 6.4.1
       '@prisma/get-platform': 6.4.1
-    dev: false
 
   /@prisma/extension-accelerate@1.2.2(@prisma/client@6.4.1):
     resolution: {integrity: sha512-LOlfkG6If+o8PFRzLzp26ackP/d+j2HrkTJaxuV/Wd+sdAHz/AkmzEDGbo2UpHFpxEM9hWMBe3ScSwUKYUDOXg==}
@@ -1524,13 +1521,11 @@ packages:
       '@prisma/debug': 6.4.1
       '@prisma/engines-version': 6.4.0-29.a9055b89e58b4b5bfb59600785423b1db3d0e75d
       '@prisma/get-platform': 6.4.1
-    dev: false
 
   /@prisma/get-platform@6.4.1:
     resolution: {integrity: sha512-gXqZaDI5scDkBF8oza7fOD3Q3QMD0e0rBynlzDDZdTWbWmzjuW58PRZtj+jkvKje2+ZigCWkH8SsWZAsH6q1Yw==}
     dependencies:
       '@prisma/debug': 6.4.1
-    dev: false
 
   /@rc-component/async-validator@5.0.4:
     resolution: {integrity: sha512-qgGdcVIF604M9EqjNF0hbUTz42bz/RDtxWdWuU5EQe3hi7M8ob54B6B35rOsvX5eSvIHIzT9iH1R3n+hk3CGfg==}
@@ -3151,7 +3146,6 @@ packages:
       esbuild: 0.25.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /esbuild@0.25.0:
     resolution: {integrity: sha512-BXq5mqc8ltbaN34cDqWuYKyNhX8D/Z0J1xdtdQ8UcIIIyJyz+ZMKUt58tF3SrZ85jcfN/PZYhjR5uDQAYNVbuw==}
@@ -4789,7 +4783,6 @@ packages:
       fsevents: 2.3.3
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /prismjs@1.27.0:
     resolution: {integrity: sha512-t13BGPUlFDR7wRB5kQDG4jjl7XeuH6jbJGt11JHPL96qwsEHNX2+68tFXqc1/k+/jALsbSWJKUOT/hcYAZ5LkA==}
