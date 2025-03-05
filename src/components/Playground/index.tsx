@@ -139,35 +139,43 @@ const NewChat = () => {
           // pipe through
           return await askApi(lastMessage);
         }
-
-        // Send a request with Message as the parameter
-        return "messages"; // Supports both streaming and non-streaming
+        return await askApi(lastMessage);
       }}
       locale="en-US"
       chatItemRenderConfig={{
         contentRender: (P, A) => {
-          console.log("a", P.message);
+          // console.log("a", P.message);
           return A;
         },
       }}
       transformToChatMessage={(text) => {
-        const chunks = text.split("data:");
-
-        const cleanChunks = chunks
-          .map((chunk) => chunk.trim())
-          .filter((chunk) => chunk);
-        const properTextChunks = cleanChunks.map((chunk) => {
+        // not a data chunk
+        if (!text.includes('data:')) {
+          return text;
+        }
+        
+        let result = '';
+        
+        const chunks = text.split('data:');
+        
+        for (const chunk of chunks) {
+          const payload = chunk.trim();
+          if (!payload || payload === '[DONE]') continue;
+          
           try {
-            const data = JSON.parse(chunk);
-            console.log(data);
-            return data?.choices?.[0]?.delta?.content || "";
+            const data = JSON.parse(payload);
+            const content = data?.choices?.[0]?.delta?.content;
+            if (content) result += content;
           } catch (e) {
-            // @prashant fix this asap
-            return "...";
+            // JSON parse failed, ( due to split json)
+            const contentMatch = payload.match(/"delta":\s*{\s*"content":\s*"([^"]*)"/);
+            if (contentMatch && contentMatch[1]) {
+              result += contentMatch[1];
+            }
           }
-        });
-
-        return properTextChunks.join("");
+        }
+        
+        return result;
       }}
     />
   );
