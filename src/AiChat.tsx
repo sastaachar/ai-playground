@@ -19,6 +19,7 @@ const parseEventData = (data: string) => {
       content: obj.choices?.[0]?.delta?.content as string,
     };
   } catch (e) {
+    console.log(e);
   }
 };
 

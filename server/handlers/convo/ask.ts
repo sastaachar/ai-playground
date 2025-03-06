@@ -10,13 +10,11 @@ export async function ask(request: Request) {
     if (!body.query) throw new Error('No query provided');
 
     const { query, model, prevMessage, direct, chatSessionId } = body;
-    const messageWithContext = addSimpleContext(query);
-
-
-
-    if (model === 'onyx' && process.env.NODE_ENV === 'development') {
+   
+    if (model === 'onyx') {
       return getOnyxResponse({ query, chatSessionId, parentMessageId: prevMessage?.id });
     }
+    const messageWithContext = addSimpleContext(query);
 
     if (direct) {
       // for debugging

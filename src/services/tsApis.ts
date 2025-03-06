@@ -1,5 +1,3 @@
-import { JS_USERNAME } from "../constants";
-
 export const getCurrentUser = async ({
   host,
   token

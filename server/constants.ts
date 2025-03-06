@@ -25,7 +25,7 @@ export const config = {
       PRESENCE_PENALTY: Number(process.env.AI_PRESENCE_PENALTY) || 0,
       FREQUENCY_PENALTY: Number(process.env.AI_FREQUENCY_PENALTY) || 0,
     },
-    MODEL: process.env.AI_MODEL || AI_MODEL.GPT_4O_MINI,
+    MODEL: process.env.AI_MODEL || AI_MODEL.GPT_4O,
     CREDS: {
       [AI_MODEL.GPT_4O_MINI]: {
         API_LINK: process.env.AI_API_LINK_4O_MINI || '',

@@ -44,7 +44,7 @@ type GPTOptions = {
 
 export const getGPTResponse = (messages: Message[], options: GPTOptions = {}) => {
 
-  const isValidModel = options.model && Object.keys(config.AI.CREDS).includes(options.model || config.AI.MODEL);
+  const isValidModel = options.model && Object.keys(config.AI.CREDS).includes(options.model);
   const model = isValidModel ? options.model : config.AI.MODEL;
   const apiLink = config.AI.CREDS[model].API_LINK;
   const apiKey = config.AI.CREDS[model].API_KEY;
