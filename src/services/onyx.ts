@@ -40,7 +40,7 @@ const getOnyxResponse = async ({ query, chatSessionId, parentMessageId = null }:
     body: JSON.stringify({
       alternate_assistant_id: 12,
       chat_session_id: chatSessionId,
-      parent_message_id: parentMessageId,
+      parent_message_id: null,
       message: query,
       llm_override: {
         model_provider: "Default",

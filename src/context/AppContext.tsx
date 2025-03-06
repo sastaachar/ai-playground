@@ -14,12 +14,16 @@ export const AppContext = createContext({
   curlCode: "",
   isEmbed: false,
   model: AI_MODEL.ONYX,
+  chatSessionId: "",
+  lastChatId: 0,
   setHost: (host: string) => {},
   setUsername: (username: string) => {},
   setToken: (token: string) => {},
   setCode: (code: string) => {},
   setCurlCode: (curlCode: string) => {},
   setModel: (model: AI_MODEL) => {},
+  setChatSessionId: (chatSessionId: string) => {},
+  setLastChatId: (lastChatId: number) => {},
 });
 
 export const AppContextProvider = ({
@@ -36,6 +40,8 @@ export const AppContextProvider = ({
   const isEmbed = window.top !== window.self;
   const isLocal = window.location.href.includes('localhost');
   const [model, setModel] = useState(isLocal ? AI_MODEL.ONYX : AI_MODEL.GPT_4O);
+  const [chatSessionId, setChatSessionId] = useState("");
+  const [lastChatId, setLastChatId] = useState(0);
 
   useEffect(() => {
     setIsLoading(true);
@@ -85,6 +91,7 @@ export const AppContextProvider = ({
 
   useEffect(() => {
     (window as any)._contentCache = {
+      ...(window as any)._contentCache || {},
       host,
       username,
       token,
@@ -92,8 +99,9 @@ export const AppContextProvider = ({
       curlCode,
       isLoading,
       isEmbed,
+      chatSessionId,
     };
-  }, [host, username, token, code, curlCode, isLoading, isEmbed]);
+  }, [host, username, token, code, curlCode, isLoading, isEmbed, chatSessionId, lastChatId]);
 
   useEffect( () => {
     (window as any)._code = code;
@@ -122,12 +130,16 @@ export const AppContextProvider = ({
         isLoading,
         isEmbed,
         model,
+        chatSessionId,
+        lastChatId,
         setHost,
         setUsername,
         setCode,
         setToken,
         setCurlCode,
         setModel,
+        setChatSessionId,
+        setLastChatId,
       }}
     >
       {children}

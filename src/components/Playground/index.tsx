@@ -12,6 +12,7 @@ import { getChunkParser } from "../../utils";
 import { AI_MODEL } from "../../../server/types";
 import { ListAltOutlined } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
+import { createChatSession } from "../../services/onyx";
 
 interface ChatBoxProps {
   setShowPreview: (show: any) => void;
@@ -41,7 +42,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
           readOnly: false,
         }}
         onMount={() => {
-          setCode((children[0] as any).props.children[0]);
+          // console.log("onMount", children[0] as any);
+          // setCode((children[0] as any).props.children[0]);
         }}
         width="100%"
         onChange={(value) => {
@@ -110,7 +112,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
     );
   };
 
-  const { model } = useAppContext();
+  const { model, setChatSessionId } = useAppContext();
   return (
     <ProChat
       userMeta={{
@@ -122,6 +124,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
         title: "AI Assistant"
       }}
       request={async (messages) => {
+
+        const isFirstMessage = messages.length === 1;
+        if (isFirstMessage) {
+          const { chat_session_id }  = await createChatSession();
+          console.log("chat_session_id", chat_session_id);
+          setChatSessionId(chat_session_id);
+        }
+
         const currentQuery = (messages[messages.length - 1] as any).message || "";
         let prevMessage = undefined;
         if (messages.length > 1) {
@@ -133,9 +143,9 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
             response: lastReply
           }
         }
-        // const { model } = window._cacheContent || {};
+        const { model, chatSessionId } = (window as any)._contentCache || {};
 
-        return await askApi({query:currentQuery, prevMessage, model});
+        return await askApi({query:currentQuery, prevMessage, model, chatSessionId : chatSessionId || ""});
       }}
       locale="en-US"
       actions={{
@@ -146,7 +156,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
           ...defaultDoms
         ]
       }}
-      transformToChatMessage={ getChunkParser(model)}
+      transformToChatMessage={getChunkParser(model)}
       markdownProps={{
         components: {
           pre: renderCodeEditor

@@ -41,7 +41,13 @@ const getOnyxParser = () => {
 
   const getContentFromChunk = (chunk: string) => {
     try {
-      return JSON.parse(chunk).answer_piece;
+      const json = JSON.parse(chunk);
+
+      if (json.message_id) {
+        (window as any)._contentCache.lastChatId = json.message_id;
+      }
+
+      return json.answer_piece;
     } catch {
       return "";
     }

@@ -85,18 +85,18 @@ function parseEventData(data: string) {
   }
 }
 
-const askOnyx = ({ query, prevMessage }: { query: string, prevMessage: any }) => {
-  return getOnyxResponse({ query });
+const askOnyx = ({ query, prevMessage, chatSessionId }: { query: string, prevMessage: any, chatSessionId?: string }) => {
+  return getOnyxResponse({ query, chatSessionId });
 }
 
 
-const askApi = ({ query, prevMessage, model = AI_MODEL.ONYX }: { query: string, prevMessage: any, model?: AI_MODEL }) => {
+const askApi = ({ query, prevMessage, model = AI_MODEL.ONYX, chatSessionId }: { query: string, prevMessage: any, model?: AI_MODEL, chatSessionId?: string }) => {
 
   const { host, token } = (window as any)._contentCache || {};
   const extraQuery = `Use ${host} as the thoughtspot host and use ${token} as the auth token for liveboardid use 74852035-9624-4fac-b352-200fa8506b14 `;
 
   if (model === AI_MODEL.ONYX) {
-    return askOnyx({ query: query + extraQuery , prevMessage })
+    return askOnyx({ query: query + extraQuery , prevMessage, chatSessionId })
   }
 
   const isDebug = window.location.href.includes('debug=true');
