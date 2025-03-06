@@ -4,7 +4,7 @@ import {
   EmbedEvent,
   AuthType,
 } from "@thoughtspot/visual-embed-sdk";
-import './styles.css'; 
+import './index.css'; 
   
 // Use prefetch to load static resources early and optimize response time. 
 // Call init early to complete authentication during app load for better performance.
