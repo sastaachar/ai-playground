@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Typography, Button, Paper, styled, Tooltip } from "@mui/material";
+import { Typography, Button, Paper, styled, Tooltip, Divider } from "@mui/material";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1.5),
     margin: theme.spacing(0.5, 0),
+    backgroundColor: 'rgba(49, 52, 141, 0.06)',
     transition: "background-color 0.2s ease",
     "&:hover": {
         backgroundColor: theme.palette.mode === 'dark' ?
             'rgba(255, 255, 255, 0.1)' :
             'rgba(0, 0, 0, 0.04)',
     },
-    borderRadius: '6px',
+    borderRadius: '3rem',
     cursor: 'pointer',
     '& a': {
         textDecoration: 'none',
@@ -25,8 +26,6 @@ const PanelContainer = styled("aside")(({ theme }) => ({
     height: "100vh",
     backgroundColor: theme.palette.background.paper,
     borderLeft: `1px solid ${theme.palette.divider}`,
-    borderTopRightRadius: '8px',
-    borderBottomRightRadius: '8px',
     padding: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
@@ -36,10 +35,21 @@ const PanelContainer = styled("aside")(({ theme }) => ({
     boxShadow: theme.shadows[2]
 }));
 
+const HeadingContainer = styled("div")(({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
+    borderTopRightRadius: '8px',
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+}));
+
 const ListContainer = styled("div")(({ theme }) => ({
     flexGrow: 1,
     overflowY: "auto",
     paddingRight: theme.spacing(1),
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '8px',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
 
     '&::-webkit-scrollbar': {
         width: '6px',
@@ -63,11 +73,11 @@ const StyledButton = styled(Button)(({ theme }) => ({
     alignSelf: 'flex-start',
     fontSize: '0.75rem',
     padding: theme.spacing(0.5, 1),
-    borderRadius: '4px',
     transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
     '&:hover': {
         backgroundColor: theme.palette.action.hover,
         boxShadow: theme.shadows[1],
+        borderRadius: '3rem',
     },
 }));
 
@@ -91,25 +101,36 @@ export const DeploimentList: React.FC = () => {
     useEffect(() => { getList(); }, []);
 
     return (
-        <PanelContainer>
-            <Typography variant="subtitle1" gutterBottom sx={{
-                fontSize: '0.875rem',
-                fontWeight: 600,
-                color: 'text.secondary',
-                px: 1,
-                mb: 1
-            }}>
-                Deployment History
-            </Typography>
-
-            <StyledButton
-                variant="text"
-                onClick={getList}
-                size="small"
-            >
-                Refresh list
-            </StyledButton>
-
+        <PanelContainer style={{ borderRadius: '15px', height: '94%', marginTop: '1%' }}>
+            <HeadingContainer>
+                <Typography variant="subtitle1" gutterBottom sx={{
+                    fontSize: '0.875rem',
+                    fontWeight: 'bold',
+                    color: 'text.primary',
+                    px: 1,
+                    mb: 1
+                }}>
+                    Deployment History
+                </Typography>
+                <div style={{ border: '1px solid gray' , borderRadius: '3rem', alignItems: 'center', justifyContent: 'center', display: 'flex', width: '100%', height: '60%'}}>
+                <StyledButton
+                    variant="text"
+                    onClick={getList}
+                    size="small"
+                    sx={{
+                        fontWeight: 'bold',
+                        color: 'text.secondary',
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '3rem'
+                    }}
+                >
+                    
+                    Refresh list
+                </StyledButton>
+                </div>
+            </HeadingContainer>
+            <Divider />
             <ListContainer>
                 {listData.map((item: any) => (
                     <StyledPaper key={item.id} elevation={0}>
