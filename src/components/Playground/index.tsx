@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import { askApi } from "../../utils/openAi";
 import { ProChat } from "@ant-design/pro-chat";
@@ -7,11 +7,11 @@ import { FaPlayCircle } from "react-icons/fa";
 import { VscRunAll } from "react-icons/vsc";
 import { GrDeploy } from "react-icons/gr";
 import { PiBracketsCurlyLight } from "react-icons/pi";
-
 import { useAppContext } from "../../context/AppContext";
 import { getChunkParser } from "../../utils";
 import { AI_MODEL } from "../../../server/types";
 import { ListAltOutlined } from "@mui/icons-material";
+
 interface ChatBoxProps {
   setShowPreview: (show: any) => void;
   setShowRestSDK: (show: any) => void;
@@ -21,8 +21,10 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callCreateDeployment, setShowList }) => {
-  
   const { setCode } = useAppContext();
+  const [isPreviewActive, setIsPreviewActive] = useState(false);
+  const [isRestSDKActive, setIsRestSDKActive] = useState(false);
+  const [isListActive, setIsListActive] = useState(false);
 
   const renderCodeEditor = ({ children }: { children: any }) => (
     <>
@@ -32,9 +34,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
         value={(children[0] as any).props.children[0]}
         theme="vs-dark"
         options={{
-          minimap: {
-            enabled: false
-          },
+          minimap: { enabled: false },
           scrollBeyondLastLine: false,
           inDiffEditor: false,
           readOnly: false,
@@ -51,7 +51,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
           className="run-button"
           onClick={() => {
             setShowPreview(true);
-            // setCode(code);
           }}
         >
           <VscRunAll className="action-icon" />
@@ -62,7 +61,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
         >
           <GrDeploy className="action-icon" />
         </button>
-        
       </div>
     </>
   );
@@ -71,22 +69,44 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
     return (
       <FaPlayCircle
         className="preview-toggle"
-        onClick={() => {setShowPreview(prev => !prev); setShowRestSDK(false); }}
+        style={{ color: isPreviewActive ? "blue" : "inherit" }}
+        onClick={() => {
+          setShowPreview((prev) => !prev);
+          setShowRestSDK(false);
+          setIsPreviewActive((prev) => !prev);
+          setIsRestSDKActive(false);
+        }}
       />
     );
   };
 
   const restSDKToggle = () => {
     return (
-      <PiBracketsCurlyLight className="rest-sdk-toggle" onClick={() => {setShowRestSDK(prev => !prev); setShowPreview(false); }} />
+      <PiBracketsCurlyLight
+        className="rest-sdk-toggle"
+        style={{ color: isRestSDKActive ? "white" : "inherit", backgroundColor: isRestSDKActive ? "blue" : "inherit"}}
+        onClick={() => {
+          setShowRestSDK((prev) => !prev);
+          setShowPreview(false);
+          setIsRestSDKActive((prev) => !prev);
+          setIsPreviewActive(false);
+        }}
+      />
     );
   };
 
   const listToggle = () => {
     return (
-      <ListAltOutlined className="list-toggle" onClick={() => {setShowList(prev => !prev)}} />
-    )
-  }
+      <ListAltOutlined
+        className="list-toggle"
+        style={{ color: isListActive ? "blue" : "inherit" }}
+        onClick={() => {
+          setShowList((prev) => !prev);
+          setIsListActive((prev) => !prev);
+        }}
+      />
+    );
+  };
 
   const { model } = useAppContext();
   return (
