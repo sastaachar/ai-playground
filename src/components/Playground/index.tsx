@@ -9,9 +9,7 @@ import { GrDeploy } from "react-icons/gr";
 import { PiBracketsCurlyLight } from "react-icons/pi";
 import { useAppContext } from "../../context/AppContext";
 import { getChunkParser } from "../../utils";
-import { AI_MODEL } from "../../../server/types";
 import { ListAltOutlined } from "@mui/icons-material";
-import { Avatar } from "@mui/material";
 import { createChatSession } from "../../services/onyx";
 
 interface ChatBoxProps {
@@ -23,12 +21,14 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callCreateDeployment, setShowList }) => {
-  const { setCode } = useAppContext();
+  const { setEditorCode } = useAppContext();
   const [isPreviewActive, setIsPreviewActive] = useState(false);
   const [isRestSDKActive, setIsRestSDKActive] = useState(false);
   const [isListActive, setIsListActive] = useState(true);
 
-  const renderCodeEditor = ({ children }: { children: any }) => (
+  const renderCodeEditor = ({ children }: { children: any }) => {
+    setEditorCode((children[0] as any).props.children[0]);
+    return (
     <>
       <Editor
         defaultLanguage="javascript"
@@ -40,14 +40,17 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
           scrollBeyondLastLine: false,
           inDiffEditor: false,
           readOnly: false,
-        }}
+        }}        
         onMount={() => {
+
           // console.log("onMount", children[0] as any);
-          // setCode((children[0] as any).props.children[0]);
+          const { code } = (window as any)._contentCache;
+          setEditorCode(code);
         }}
         width="100%"
         onChange={(value) => {
-          setCode(value);
+          console.log("onChange", value);
+          setEditorCode(value);
         }}
       />
       <div className="editor-actions">
@@ -67,7 +70,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
         </button>
       </div>
     </>
-  );
+  )};
 
   const previewToggle = () => {
     return (
@@ -116,11 +119,11 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
   return (
     <ProChat
       userMeta={{
-        avatar: "https://i.ytimg.com/vi/s9dbAfjlrks/maxresdefault.jpg",
+        avatar: "👨🏻‍🎨",
         title: "You"
       }}
       assistantMeta={{
-        avatar: "http://cdn.akc.org/content/article-body-image/housetrain_adult_dog_hero.jpg",
+        avatar: "😎",
         title: "AI Assistant"
       }}
       request={async (messages) => {

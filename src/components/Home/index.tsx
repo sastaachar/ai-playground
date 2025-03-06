@@ -11,7 +11,7 @@ import { DeploimentList } from "../DeploimentList";
 const Home: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [showRestSDK, setShowRestSDK] = useState(false);
-  const { username, host, code } = useAppContext();
+  const { username, host, code, curlCode } = useAppContext();
   const [deployedIds, setDeployedIds] = useState([]);
   const [api, contextHolder] = notification.useNotification();
   const [showList, setShowList] = useState(true);
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
         {
           <div className={`right-panel ${showRestSDK ? "visible" : "hidden"} ${!showList ? "right-panel-w-list" : ""}`}>
             <div className="right-panel-rest-sdk">
-              { showRestSDK && <CurlVisualizer curlCommand={code} />}
+              { showRestSDK && <CurlVisualizer curlCommand={curlCode} />}
             </div>
           </div>
         }

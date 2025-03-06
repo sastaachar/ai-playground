@@ -24,6 +24,7 @@ export const AppContext = createContext({
   setModel: (model: AI_MODEL) => {},
   setChatSessionId: (chatSessionId: string) => {},
   setLastChatId: (lastChatId: number) => {},
+  setEditorCode: (code: string) => {},
 });
 
 export const AppContextProvider = ({
@@ -42,6 +43,15 @@ export const AppContextProvider = ({
   const [model, setModel] = useState(isLocal ? AI_MODEL.ONYX : AI_MODEL.GPT_4O);
   const [chatSessionId, setChatSessionId] = useState("");
   const [lastChatId, setLastChatId] = useState(0);
+
+
+  const setEditorCode = (code: string) => {
+    if (code.includes("curl")) {
+      setCurlCode(code);
+    } else {
+      setCode(code);
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -140,6 +150,7 @@ export const AppContextProvider = ({
         setModel,
         setChatSessionId,
         setLastChatId,
+        setEditorCode,
       }}
     >
       {children}
