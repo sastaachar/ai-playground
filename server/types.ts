@@ -6,6 +6,7 @@ export enum AI_MODEL {
   GPT_O1 = 'o1',
   GPT_O1_MINI = 'o1-mini',
   GPT_O3_MINI = 'o3-mini',
+  ONYX = 'onyx',
 }
 
 export enum EMBEDDING_MODEL {

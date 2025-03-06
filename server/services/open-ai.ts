@@ -1,5 +1,5 @@
-import { config } from "./constants.js";
-import { Message } from "./types.js";
+import { config } from "../constants.js";
+import { Message } from "../types.js";
 
 
 
@@ -33,7 +33,7 @@ export const askAi = (query: string) => {
       presence_penalty: config.AI.PARAMS.PRESENCE_PENALTY,
       frequency_penalty: config.AI.PARAMS.FREQUENCY_PENALTY,
       stream: config.AI.STREAM,
-    }), 
+    }),
     method: "POST",
   });
 }
@@ -45,7 +45,7 @@ type GPTOptions = {
 export const getGPTResponse = (messages: Message[], options: GPTOptions = {}) => {
 
   const isValidModel = options.model && Object.keys(config.AI.CREDS).includes(options.model || config.AI.MODEL);
-  const model =  isValidModel ? options.model : config.AI.MODEL;
+  const model = isValidModel ? options.model : config.AI.MODEL;
   const apiLink = config.AI.CREDS[model].API_LINK;
   const apiKey = config.AI.CREDS[model].API_KEY;
 
@@ -62,8 +62,8 @@ export const getGPTResponse = (messages: Message[], options: GPTOptions = {}) =>
       presence_penalty: config.AI.PARAMS.PRESENCE_PENALTY,
       frequency_penalty: config.AI.PARAMS.FREQUENCY_PENALTY,
       stream: config.AI.STREAM,
-    }), 
+    }),
     method: "POST",
-  });  
+  });
 }
 

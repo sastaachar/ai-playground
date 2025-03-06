@@ -1,4 +1,6 @@
 import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { AI_MODEL } from "../../server/types";
+import { createSSEStreamForAiApi } from ".";
 
 const url = "/api/convo/ask";
 
@@ -28,7 +30,7 @@ async function streamOpenAI({
             role: "user",
             content: `${query}`,
           }],
-          model: 'gpt-4o-mini',
+          model: 'onyx',
           temperature: 0,
           top_p: 0.9,
           presence_penalty: 0,
@@ -83,19 +85,36 @@ function parseEventData(data: string) {
 }
   
 
-const askApi = (query: string, prevMessage: any) => {
+const askApi = ({query, prevMessage, model = AI_MODEL.ONYX}: {query: string, prevMessage: any, model?: AI_MODEL}) => {
   const isDebug = window.location.href.includes('debug=true');
+
+  const { host, token } = (window as any)._contentCache || {};
+  const extraQuery = `Use ${host} as the thoughtspot host and use ${token} as the auth token for liveboardid use 74852035-9624-4fac-b352-200fa8506b14 `;
+
   return fetch(url, {
     body: 
        JSON.stringify({
-        query: query,
+        query: query + extraQuery,
         direct: isDebug,
-        prevMessage: prevMessage
+        prevMessage: prevMessage,
+        model: model
       }),
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     }});
 };
+
+// const askApi = async ({query, prevMessage, model = AI_MODEL.ONYX}: {query: string, prevMessage: any, model?: AI_MODEL}) => {
+//   const isDebug = window.location.href.includes('debug=true');
+//   return createSSEStreamForAiApi(url,  JSON.stringify({
+//     query: query,
+//     direct: isDebug,
+//     prevMessage: prevMessage,
+//     model: model
+//   }))
+// }
+
+
 
 export { streamOpenAI, askApi };

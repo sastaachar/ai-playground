@@ -16,7 +16,7 @@ export const getAllDeployments = async (req: Request) => {
       host: host
     }
   });
-  return new Response(JSON.stringify(deployments), { status: 200 });
+  return new Response(JSON.stringify(deployments), { status: 200, headers: { 'Content-Type': 'application/json' } });
 }
 
 export const createDeployment = async (req: Request) => {
@@ -39,7 +39,7 @@ export const createDeployment = async (req: Request) => {
     }
   });
 
-  return new Response(JSON.stringify(deployment), { status: 200 });
+  return new Response(JSON.stringify(deployment), { status: 200, headers: { 'Content-Type': 'application/json' } });
 }
 
 export const updateDeployment = async (req: Request) => {
@@ -56,7 +56,7 @@ export const updateDeployment = async (req: Request) => {
         data: payload
     });
 
-    return new Response(JSON.stringify(deployment), { status: 200 });
+    return new Response(JSON.stringify(deployment), { status: 200, headers: { 'Content-Type': 'application/json' } });
 }
 
 export const getDeployment = async (req: Request) => {
@@ -71,7 +71,7 @@ export const getDeployment = async (req: Request) => {
     where: { id }
   });
 
-  return new Response(JSON.stringify(deployment), { status: 200 }); 
+  return new Response(JSON.stringify(deployment), { status: 200, headers: { 'Content-Type': 'application/json' } }); 
 } 
 
 export const deleteDeployment = async (req: Request) => {
@@ -86,5 +86,5 @@ export const deleteDeployment = async (req: Request) => {
     where: { id }
   });
 
-  return new Response(JSON.stringify(deployment), { status: 200 });
+  return new Response(JSON.stringify(deployment), { status: 200, headers: { 'Content-Type': 'application/json' } });
 }

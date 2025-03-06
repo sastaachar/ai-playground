@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import sdk, { UiViewOption } from '@stackblitz/sdk';
+import sdk from '@stackblitz/sdk';
 import appTemplate from '../../templates/App.js?raw';
+import indexTemplate from '../../templates/index.html?raw';
+import stylesTemplate from '../../templates/styles.css?raw';
 import { STACKBLITZ_EMBED_OPTIONS, STACKBLITZ_FILE_OPTIONS } from '../../constants';
 
 interface StackblitzProps {
@@ -23,18 +25,19 @@ const Stackblitz: React.FC<StackblitzProps> = ({ code = '' , type = 'embed'}) =>
               title: 'ThoughtSpot Embed',
               template: 'javascript',
               files: {
-                'index.html': `
-                    <script src="index.js"></script>
-                    <div id="your-own-div" style="width: 100%; height: 100%;"></div>`,
-                'index.js': code || appTemplate
+                'index.html': indexTemplate,
+                'index.js': code || appTemplate,
+                'index.css': stylesTemplate
               },
             },
             {
               ...STACKBLITZ_EMBED_OPTIONS,
-              view: type === 'deployment' ? 'preview' as UiViewOption : 'editor' as UiViewOption,
+              view: 'preview',
             },
           );
           stackblitzVmRef.current = vm;
+    
+          (window as any)._vm = vm;    
         } catch (error) {
           console.error('Error embedding StackBlitz:', error);
         }

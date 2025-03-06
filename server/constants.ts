@@ -55,5 +55,10 @@ export const config = {
     DEFAULT_EMBEDDING_MODEL_KEY: process.env.AI_DEFAULT_EMBEDDING_MODEL_KEY || '',
     DEFAULT_EMBEDDING_MODEL_LINK: process.env.AI_DEFAULT_EMBEDDING_MODEL_LINK || '',
     STREAM: process.env.AI_STREAM === 'true',
+    ONYX: {
+      API_LINK: process.env.ONYX_API_LINK || '',
+      API_KEY: process.env.ONYX_API_KEY || '',
+      PERSONA_ID: Number(process.env.ONYX_PERSONA_ID) || 12,
+    }
   },
 } as const;

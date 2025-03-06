@@ -7,17 +7,21 @@ import { FaPlayCircle } from "react-icons/fa";
 import { VscRunAll } from "react-icons/vsc";
 import { GrDeploy } from "react-icons/gr";
 import { PiBracketsCurlyLight } from "react-icons/pi";
-import { getChunkParser } from "../../utils";
 
+import { useAppContext } from "../../context/AppContext";
+import { getChunkParser } from "../../utils";
+import { AI_MODEL } from "../../../server/types";
 interface ChatBoxProps {
   setShowPreview: (show: any) => void;
-  setCurrentCode: (code: string) => void;
   setShowRestSDK: (show: any) => void;
   callCreateDeployment: (code: string) => void;
   deployedIds: any;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setShowRestSDK, callCreateDeployment, deployedIds }) => {
+const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callCreateDeployment }) => {
+  
+  const { setCode } = useAppContext();
+
   const renderCodeEditor = ({ children }: { children: any }) => (
     <>
       <Editor
@@ -31,7 +35,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setSh
           },
           scrollBeyondLastLine: false,
           inDiffEditor: false,
-          readOnly: true,
+          readOnly: false,
+        }}
+        onMount={() => {
+          setCode((children[0] as any).props.children[0]);
+        }}
+        onChange={(value) => {
+          setCode(value);
         }}
       />
       <div className="editor-actions">
@@ -39,14 +49,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setSh
           className="run-button"
           onClick={() => {
             setShowPreview(true);
-            setCurrentCode((children[0] as any).props.children[0]);
+            // setCode(code);
           }}
         >
           <VscRunAll className="action-icon" />
         </button>
         <button
           className="deploy-button"
-          onClick={() => callCreateDeployment((children[0] as any).props.children[0])}
+          onClick={() => callCreateDeployment((window as any)._contentCache.code)}
         >
           <GrDeploy className="action-icon" />
         </button>
@@ -70,6 +80,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setSh
     );
   };
 
+  const { model } = useAppContext();
   return (
     <ProChat
       request={async (messages) => {
@@ -84,7 +95,9 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setSh
             response: lastReply
           }
         }
-        return await askApi(currentQuery, prevMessage);
+        // const { model } = window._cacheContent || {};
+        const isLocal = window.location.href.includes('localhost');
+        return await askApi({query:currentQuery, prevMessage, model : isLocal ? AI_MODEL.ONYX: null});
       }}
       locale="en-US"
       actions={{
@@ -94,7 +107,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setCurrentCode, setSh
           ...defaultDoms
         ]
       }}
-      transformToChatMessage={getChunkParser()}
+      transformToChatMessage={ getChunkParser(model)}
       markdownProps={{
         components: {
           pre: renderCodeEditor
