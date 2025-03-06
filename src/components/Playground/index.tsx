@@ -3,7 +3,7 @@ import "./index.css";
 import { askApi } from "../../utils/openAi";
 import { ProChat } from "@ant-design/pro-chat";
 import { Editor } from "@monaco-editor/react";
-import { FaPlayCircle } from "react-icons/fa";
+import { FaPlayCircle, FaRobot, FaUser } from "react-icons/fa";
 import { VscRunAll } from "react-icons/vsc";
 import { GrDeploy } from "react-icons/gr";
 import { PiBracketsCurlyLight } from "react-icons/pi";
@@ -11,6 +11,7 @@ import { useAppContext } from "../../context/AppContext";
 import { getChunkParser } from "../../utils";
 import { AI_MODEL } from "../../../server/types";
 import { ListAltOutlined } from "@mui/icons-material";
+import { Avatar } from "@mui/material";
 
 interface ChatBoxProps {
   setShowPreview: (show: any) => void;
@@ -112,6 +113,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
   const { model } = useAppContext();
   return (
     <ProChat
+      userMeta={{
+        avatar: "https://i.ytimg.com/vi/s9dbAfjlrks/maxresdefault.jpg",
+        title: "You"
+      }}
+      assistantMeta={{
+        avatar: "http://cdn.akc.org/content/article-body-image/housetrain_adult_dog_hero.jpg",
+        title: "AI Assistant"
+      }}
       request={async (messages) => {
         const currentQuery = (messages[messages.length - 1] as any).message || "";
         let prevMessage = undefined;
