@@ -93,7 +93,7 @@ const askOnyx = ({ query, prevMessage, chatSessionId }: { query: string, prevMes
 const askApi = ({ query, prevMessage, model = AI_MODEL.ONYX, chatSessionId }: { query: string, prevMessage: any, model?: AI_MODEL, chatSessionId?: string }) => {
 
   const { host, token } = (window as any)._contentCache || {};
-  const extraQuery = `Use ${host} as the thoughtspot host and use ${token} as the auth token for liveboardid use 74852035-9624-4fac-b352-200fa8506b14 `;
+  const extraQuery = `Use ${host} as the thoughtspot host and use ${token} as the auth token for liveboardid use 9bd202f5-d431-44bf-9a07-b4f7be372125 `;
 
   if (model === AI_MODEL.ONYX) {
     return askOnyx({ query: query + extraQuery , prevMessage, chatSessionId })
