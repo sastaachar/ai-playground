@@ -96,8 +96,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
           }
         }
         // const { model } = window._cacheContent || {};
-        const isLocal = window.location.href.includes('localhost');
-        return await askApi({query:currentQuery, prevMessage, model : isLocal ? AI_MODEL.ONYX: null});
+
+        return await askApi({query:currentQuery, prevMessage, model});
       }}
       locale="en-US"
       actions={{
