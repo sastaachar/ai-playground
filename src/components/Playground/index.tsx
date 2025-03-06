@@ -11,14 +11,16 @@ import { PiBracketsCurlyLight } from "react-icons/pi";
 import { useAppContext } from "../../context/AppContext";
 import { getChunkParser } from "../../utils";
 import { AI_MODEL } from "../../../server/types";
+import { ListAltOutlined } from "@mui/icons-material";
 interface ChatBoxProps {
   setShowPreview: (show: any) => void;
   setShowRestSDK: (show: any) => void;
   callCreateDeployment: (code: string) => void;
   deployedIds: any;
+  setShowList: (show: any) => void;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callCreateDeployment }) => {
+const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callCreateDeployment, setShowList }) => {
   
   const { setCode } = useAppContext();
 
@@ -80,6 +82,12 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
     );
   };
 
+  const listToggle = () => {
+    return (
+      <ListAltOutlined className="list-toggle" onClick={() => {setShowList(prev => !prev); setShowPreview(false); setShowRestSDK(false)}} />
+    )
+  }
+
   const { model } = useAppContext();
   return (
     <ProChat
@@ -104,6 +112,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
         render: (defaultDoms) => [
           previewToggle(),
           restSDKToggle(),
+          listToggle(),
           ...defaultDoms
         ]
       }}
