@@ -14,10 +14,14 @@ const App: React.FC = () => {
     return <Loader />
   }
 
-  return <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/deployment/:deploymentId" element={<Deployment />} />
-  </Routes>
+  return (
+    <div className="App">
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/deployment/:deploymentId" element={<Deployment />} />
+    </Routes>
+    </div>
+  );
 }
 
 export default App;

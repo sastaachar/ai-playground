@@ -71,20 +71,20 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
     return (
       <FaPlayCircle
         className="preview-toggle"
-        onClick={() => {setShowPreview(prev => !prev); setShowRestSDK(false); setShowList(false)}}
+        onClick={() => {setShowPreview(prev => !prev); setShowRestSDK(false); }}
       />
     );
   };
 
   const restSDKToggle = () => {
     return (
-      <PiBracketsCurlyLight className="rest-sdk-toggle" onClick={() => {setShowRestSDK(prev => !prev); setShowPreview(false); setShowList(false)}} />
+      <PiBracketsCurlyLight className="rest-sdk-toggle" onClick={() => {setShowRestSDK(prev => !prev); setShowPreview(false); }} />
     );
   };
 
   const listToggle = () => {
     return (
-      <ListAltOutlined className="list-toggle" onClick={() => {setShowList(prev => !prev); setShowPreview(false); setShowRestSDK(false)}} />
+      <ListAltOutlined className="list-toggle" onClick={() => {setShowList(prev => !prev)}} />
     )
   }
 

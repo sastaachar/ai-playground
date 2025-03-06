@@ -14,7 +14,7 @@ const Home: React.FC = () => {
   const { username, host, code } = useAppContext();
   const [deployedIds, setDeployedIds] = useState([]);
   const [api, contextHolder] = notification.useNotification();
-  const [showList, setShowList] = useState(false);
+  const [showList, setShowList] = useState(true);
 
   const callCreateDeployment = async (code: string) => {
     try {
@@ -56,9 +56,9 @@ const Home: React.FC = () => {
   return (
     <div className="App">
       <div
-        className={`home-container ${showPreview || showRestSDK ? "preview-mode" : ""}`}
+        className={`${ showList ? "home-container" : "home-container-w-list"} ${showPreview || showRestSDK ? "preview-mode" : ""}`}
       >
-        <div className="left-panel">
+        <div className={`${!showList ? "left-panel-w-list" : "left-panel"}`}>
           <ChatBox
             setShowPreview={setShowPreview}
             setShowRestSDK={setShowRestSDK}
@@ -68,14 +68,14 @@ const Home: React.FC = () => {
           />
         </div>
         {
-          <div className={`right-panel ${showPreview ? "visible" : "hidden"}`}>
+          <div className={`right-panel ${showPreview ? "visible" : "hidden"} ${!showList ? "right-panel-w-list" : ""}`}>
             <div style={{ width: "100%", height: "60%" }}>
              { showPreview && <Stackblitz code={code} />}
             </div>
           </div>
         }
         {
-          <div className={`right-panel ${showRestSDK ? "visible" : "hidden"}`}>
+          <div className={`right-panel ${showRestSDK ? "visible" : "hidden"} ${!showList ? "right-panel-w-list" : ""}`}>
             <div className="right-panel-rest-sdk">
               { showRestSDK && <CurlVisualizer curlCommand={code} />}
             </div>
@@ -83,8 +83,8 @@ const Home: React.FC = () => {
         }
         {contextHolder}
         {
-          <div className={`right-panel ${showList ? "visible" : "hidden"}`}>
-            <div className="right-panel-list">
+          <div className={`${!showList ? "" : "right-panel-list"}`}>
+            <div className="right-panel-list-container">
               {showList && <DeploimentList />}
             </div>
           </div>
