@@ -24,7 +24,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
   const { setCode } = useAppContext();
   const [isPreviewActive, setIsPreviewActive] = useState(false);
   const [isRestSDKActive, setIsRestSDKActive] = useState(false);
-  const [isListActive, setIsListActive] = useState(false);
+  const [isListActive, setIsListActive] = useState(true);
 
   const renderCodeEditor = ({ children }: { children: any }) => (
     <>

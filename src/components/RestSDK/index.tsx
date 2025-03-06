@@ -49,7 +49,7 @@ const parseCurl = (curl) => {
 const CurlVisualizer = ({ curlCommand }) => {
   const {token} = useAppContext();
   const [history, setHistory] = useState([]);
-  const [activeEntry, setActiveEntry] = useState(null);
+  const [activeEntry, setActiveEntry] = useState({});
   const [editedCurl, setEditedCurl] = useState(curlCommand);
   const [responseTime, setResponseTime] = useState(0);
   const [responseData, setResponseData] = useState(null);
@@ -113,8 +113,8 @@ const CurlVisualizer = ({ curlCommand }) => {
   };
 
   return (
-    <Grid container spacing={2} sx={{ p: 2, maxHeight: '100vh',  }}>
-      <Card sx={{ p: 1, overflow: 'auto', width: '100%' }}>
+    <Grid container spacing={2} sx={{ p: 2, maxHeight: '100%', backgroundColor: '' }}>
+      <Card sx={{ p: 1, width: '100%' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
           <p style={{ fontSize: '16px' }}>Request</p>
           <Tooltip title="Re-run">
@@ -126,7 +126,7 @@ const CurlVisualizer = ({ curlCommand }) => {
             <p style={{ fontSize: '12px' }}>{responseTime}ms</p>
           </div>
         </div>
-
+        <div style={{ overflow: 'scroll' }}>
         <SyntaxHighlighter 
           language="bash"
           style={atomDark}
@@ -142,9 +142,10 @@ const CurlVisualizer = ({ curlCommand }) => {
         >
           {editedCurl}
         </SyntaxHighlighter>
+        </div>
       </Card>
-      <Grid >
-        <Card sx={{ p: 1, overflow: 'scroll', backgroundColor: 'inherit' }}>
+      <Grid sx={{ width: '98%'}}>
+        <Card sx={{ p: 1, backgroundColor: 'inherit', width: '100%' }}>
             {activeEntry && (
             <>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
@@ -165,7 +166,7 @@ const CurlVisualizer = ({ curlCommand }) => {
                     <ContentCopy style={{ width: '15px', height: '15px' }}/>
                 </IconButton>
                 </div>
-                <div style={{ overflowY: 'auto', maxHeight: '60vh' }}>
+                <div style={{ overflowY: 'auto', maxHeight: '60vh', overflow: 'scroll' }}>
                     <SyntaxHighlighter
                     sx={{ overflowY: 'auto' }}
                     language="json"
@@ -186,15 +187,16 @@ const CurlVisualizer = ({ curlCommand }) => {
             )}
         </Card>
         </Grid>
-        <Grid  style={{ width: '98%', height: '80%' }}>
-        <Card sx={{ p: 1, overflow: 'scroll', backgroundColor: 'inherit', width: '100%' }}>
+        <Grid  style={{ width: '98%' }}>
+        <Card sx={{ p: 1, backgroundColor: 'inherit', width: '100%', height: '92%', overflow: 'scroll' }}>
             <Typography variant="h6" gutterBottom color="text.secondary" style={{ fontSize: '16px' }}>History</Typography>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, overflowY: 'auto', maxHeight: '60vh', overflowX: 'hidden' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, overflow: 'scroll', maxHeight: '100vh', justifyContent: 'center', alignItems: 'center' }}>
             {history.map((entry) => (
                 <motion.div
                 key={entry.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                style={{ width: '95%' }}
                 >
                 <Card 
                     sx={{ 
