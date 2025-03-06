@@ -196,6 +196,7 @@ const CurlVisualizer = ({ curlCommand }) => {
                 key={entry.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                style={{ width: '95%' }}
                 >
                 <Card 
                     sx={{ 
