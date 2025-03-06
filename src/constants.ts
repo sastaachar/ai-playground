@@ -1,6 +1,6 @@
-export const JS_HOST = "https://172.32.93.13:8443";
-export const JS_USERNAME = "tsadmin";
-export const JS_PASSWORD = "4Xyc1f%[H^3L";
+export const JS_HOST = import.meta.env.VITE_DEFAULT_HOST || "https://172.32.93.13:8443";
+export const JS_USERNAME = import.meta.env.VITE_DEFAULT_USERNAME || "tsadmin";
+export const JS_PASSWORD = import.meta.env.VITE_DEFAULT_PASSWORD || "4Xyc1f%[H^3L";
 
 import { UiViewOption } from '@stackblitz/sdk';
 

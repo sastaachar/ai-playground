@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Typography, Button, Paper, styled, Tooltip, Divider } from "@mui/material";
+import { useAppContext } from "../../context/AppContext";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1.5),
@@ -84,12 +85,14 @@ const StyledButton = styled(Button)(({ theme }) => ({
 export const DeploimentList: React.FC = () => {
     const [listData, setListData] = useState([]);
 
+    const { username, host } = useAppContext();
+
     const getList = async () => {
         try {
             const response = await fetch(window.location.origin + "/api/deployment/list", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username: "demo", host: "test" }),
+                body: JSON.stringify({ username, host }),
             });
             const data = await response.json();
             setListData(data);
