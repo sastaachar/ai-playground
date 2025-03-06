@@ -42,6 +42,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
         onMount={() => {
           setCode((children[0] as any).props.children[0]);
         }}
+        width="100%"
         onChange={(value) => {
           setCode(value);
         }}

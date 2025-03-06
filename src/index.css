@@ -115,3 +115,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.monaco-editor {
+  min-width: 50vw;
+}
