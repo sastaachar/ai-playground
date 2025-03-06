@@ -13,7 +13,8 @@ export async function ask(request: Request) {
     const messageWithContext = addSimpleContext(query);
 
 
-    if (model === 'onyx') {
+
+    if (model === 'onyx' && process.env.NODE_ENV === 'development') {
       return getOnyxResponse({ query, chatSessionId, parentMessageId: prevMessage?.id });
     }
 

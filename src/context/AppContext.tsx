@@ -35,7 +35,7 @@ export const AppContextProvider = ({
   const [curlCode, setCurlCode] = useState("");
   const isEmbed = window.top !== window.self;
   const isLocal = window.location.href.includes('localhost');
-  const [model, setModel] = useState(isLocal ? AI_MODEL.ONYX : null);
+  const [model, setModel] = useState(isLocal ? "onyx" : "");
 
   useEffect(() => {
     setIsLoading(true);
