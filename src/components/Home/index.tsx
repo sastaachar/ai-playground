@@ -6,6 +6,7 @@ import CurlVisualizer from "../RestSDK";
 import { useAppContext } from "../../context/AppContext";
 import { createDeployment } from "../../services";
 import { Button, notification, Space } from "antd";
+import { DeploimentList } from "../DeploimentList";
 
 const Home: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -13,6 +14,7 @@ const Home: React.FC = () => {
   const { username, host, code } = useAppContext();
   const [deployedIds, setDeployedIds] = useState([]);
   const [api, contextHolder] = notification.useNotification();
+  const [showList, setShowList] = useState(false);
 
   const callCreateDeployment = async (code: string) => {
     try {
@@ -62,6 +64,7 @@ const Home: React.FC = () => {
             setShowRestSDK={setShowRestSDK}
             callCreateDeployment={callCreateDeployment}
             deployedIds={deployedIds}
+            setShowList={setShowList}
           />
         </div>
         {
@@ -79,6 +82,13 @@ const Home: React.FC = () => {
           </div>
         }
         {contextHolder}
+        {
+          <div className={`right-panel ${showList ? "visible" : "hidden"}`}>
+            <div className="right-panel-list">
+              <DeploimentList />
+            </div>
+          </div>
+        }
       </div>
     </div>
   );
