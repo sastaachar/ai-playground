@@ -39,8 +39,7 @@ export const AppContextProvider = ({
   const [code, setCode] = useState("");
   const [curlCode, setCurlCode] = useState("");
   const isEmbed = window.top !== window.self;
-  const isLocal = window.location.href.includes('localhost');
-  const [model, setModel] = useState(isLocal ? AI_MODEL.ONYX : AI_MODEL.GPT_4O);
+  const [model, setModel] = useState(AI_MODEL.ONYX);
   const [chatSessionId, setChatSessionId] = useState("");
   const [lastChatId, setLastChatId] = useState(0);
 
