@@ -69,7 +69,7 @@ const Home: React.FC = () => {
         </div>
         {
           <div className={`right-panel ${showPreview ? "visible" : "hidden"} ${!showList ? "right-panel-w-list" : ""}`}>
-            <div style={{ width: "100%", height: "60%" }}>
+            <div style={{ width: "100%", height: "95%" }}>
              { showPreview && <Stackblitz code={code} />}
             </div>
           </div>
