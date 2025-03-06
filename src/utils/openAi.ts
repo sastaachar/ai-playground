@@ -1,6 +1,5 @@
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { AI_MODEL } from "../../server/types";
-import { createSSEStreamForAiApi } from ".";
 import { getOnyxResponse } from "../services/onyx";
 
 const url = "/api/convo/ask";

@@ -8,4 +8,4 @@ export const getStartChatSessionResponse = async () => {
       'Content-Type': 'application/json',
     },
   });
-} 
+}
