@@ -85,7 +85,7 @@ const Home: React.FC = () => {
         {
           <div className={`right-panel ${showList ? "visible" : "hidden"}`}>
             <div className="right-panel-list">
-              <DeploimentList />
+              {showList && <DeploimentList />}
             </div>
           </div>
         }
