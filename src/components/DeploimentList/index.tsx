@@ -13,7 +13,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
             'rgba(255, 255, 255, 0.1)' :
             'rgba(0, 0, 0, 0.04)',
     },
-    borderRadius: '3rem',
+    borderRadius: '1rem',
     cursor: 'pointer',
     '& a': {
         textDecoration: 'none',
@@ -78,7 +78,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
     '&:hover': {
         backgroundColor: theme.palette.action.hover,
         boxShadow: theme.shadows[1],
-        borderRadius: '3rem',
+        borderRadius: '1rem',
     },
 }));
 
@@ -104,7 +104,7 @@ export const DeploimentList: React.FC = () => {
     useEffect(() => { getList(); }, []);
 
     return (
-        <PanelContainer style={{ borderRadius: '15px', height: '94%', marginTop: '1%' }}>
+        <PanelContainer style={{ borderRadius: '15px', height: '96%', maxHeight: '100%' }}>
             <HeadingContainer>
                 <Typography variant="subtitle1" gutterBottom sx={{
                     fontSize: '0.875rem',
@@ -115,7 +115,7 @@ export const DeploimentList: React.FC = () => {
                 }}>
                     Deployment History
                 </Typography>
-                <div style={{ border: '1px solid gray' , borderRadius: '3rem', alignItems: 'center', justifyContent: 'center', display: 'flex', width: '100%', height: '60%'}}>
+                <div style={{ border: '1px solid gray' , borderRadius: '1rem', alignItems: 'center', justifyContent: 'center', display: 'flex', width: '100%', height: '60%'}}>
                 <StyledButton
                     variant="text"
                     onClick={getList}
@@ -125,7 +125,7 @@ export const DeploimentList: React.FC = () => {
                         color: 'text.secondary',
                         width: '100%',
                         height: '100%',
-                        borderRadius: '3rem'
+                        borderRadius: '1rem'
                     }}
                 >
                     

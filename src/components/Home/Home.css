@@ -36,6 +36,12 @@
   background-color: #ffffff;
   overflow-y: auto;
   transition: width 0.3sease;
+  /* background-color: blue; */
+  filter: grayscale(8%) brightness(95%); 
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05); 
+  border-radius: 1rem;
+  height: 98%;
+  margin-top: 10px;
   width: 90%;
 }
 
@@ -43,16 +49,28 @@
   flex: 0.8;
   min-width: 300px;
   display: flex;
+  height: 98%;
   background-color: #ffffff;
+  filter: grayscale(8%) brightness(95%);
+  border-radius: 1rem; 
+  margin-top: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05); 
 }
 .right-panel {
   flex: 0.4;
-  background-color: #ffffff;
   overflow: hidden;
   transition: width 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: #ffffff;
+  height: 98%;
+  margin-top: 10px;
+  border-radius: 1rem;
+  filter: grayscale(8%) brightness(95%);
+  border-radius: 1rem; 
+  margin-top: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);  
   width: 40%;
   margin-left: 10px;
 }
@@ -78,6 +96,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  filter: brightness(98%) contrast(95%);
+  box-shadow: inset 0 0 5px rgba(53, 111, 218, 0.05); 
   width: 20% 
 }
 
@@ -271,4 +291,11 @@
   height: 100%;
   width: 100%;
   margin: 0 auto; 
+}
+
+.App {
+  /* background-color: #f0f0f0; Light gray background */
+  height: 100%;
+  /* filter: grayscale(8%) brightness(95%); Apply slight grayscale and brightness adjustments */
+  /* box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);  */
 }
