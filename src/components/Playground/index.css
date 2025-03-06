@@ -178,3 +178,6 @@ iframe nav{
   color: white;
   border-radius: 4px;
 }
+.monaco-hover .rendered-markdown p {
+  color: #d4d4d4 !important;
+}

@@ -3,7 +3,7 @@ import "./index.css";
 import { askApi } from "../../utils/openAi";
 import { ProChat } from "@ant-design/pro-chat";
 import { Editor } from "@monaco-editor/react";
-import { FaPlayCircle, FaRobot, FaUser } from "react-icons/fa";
+import { FaPlayCircle } from "react-icons/fa";
 import { VscRunAll } from "react-icons/vsc";
 import { GrDeploy } from "react-icons/gr";
 import { PiBracketsCurlyLight } from "react-icons/pi";
@@ -26,6 +26,22 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
   const [isRestSDKActive, setIsRestSDKActive] = useState(false);
   const [isListActive, setIsListActive] = useState(true);
 
+  const handleEditorMount = (editor, monaco) => {
+    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+      typeRoots: ["node_modules/@types"]
+  });
+    fetch("https://cdn.jsdelivr.net/npm/@thoughtspot/visual-embed-sdk@1.36.2/dist/visual-embed-sdk.d.ts")
+      .then((res) => res.text())
+      .then((typings) => {
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(
+          `declare module '@thoughtspot/visual-embed-sdk' { ${typings} }`,
+          "file:///node_modules/@types/math/index.d.ts"
+        );
+        console.log("ThoughtSpot SDK typings added.", typings);
+      })
+      .catch((err) => console.error("Failed to load typings:", err));
+  };
+
   const renderCodeEditor = ({ children }: { children: any }) => {
     setEditorCode((children[0] as any).props.children[0]);
     return (
@@ -40,9 +56,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
           scrollBeyondLastLine: false,
           inDiffEditor: false,
           readOnly: false,
+          tabCompletion: 'on',
+          suggest: {
+              showDeprecated: false,
+              preview: true,
+          },
         }}        
-        onMount={() => {
-
+        onMount={(editor, monaco) => {
+          handleEditorMount(editor, monaco);
           // console.log("onMount", children[0] as any);
           const { code } = (window as any)._contentCache;
           setEditorCode(code);
@@ -118,6 +139,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ setShowPreview, setShowRestSDK, callC
   const { model, setChatSessionId } = useAppContext();
   return (
     <ProChat
+      helloMessage="Hello! I am an AI assistant here to help with embedding-related tasks. Let me know what you need! 🚀"
       userMeta={{
         avatar: "👨🏻‍🎨",
         title: "You"
