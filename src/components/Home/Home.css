@@ -1,3 +1,5 @@
+
+
 .home-container {
   display: flex;
   flex-direction: row;
@@ -5,6 +7,19 @@
   height: 100%;
   width: 70%;
   margin: 0 auto;
+  justify-content: center;
+  /* background-color: blue; */
+  width: 100%;
+}
+
+.home-container-w-list{
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
 }
 
 .home-container-rest-sdk{
@@ -15,15 +30,47 @@
   margin: 0 auto;
 }
 .left-panel {
-  flex: 1;
-  min-width: 650px;
+  flex: 0.5;
+  min-width: 300px;
   display: flex;
   background-color: #ffffff;
   overflow-y: auto;
   transition: width 0.3sease;
+  width: 90%;
 }
 
+.left-panel-w-list{
+  flex: 0.8;
+  min-width: 300px;
+  display: flex;
+  background-color: #ffffff;
+}
 .right-panel {
+  flex: 0.4;
+  background-color: #ffffff;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 40%;
+  margin-left: 10px;
+}
+
+.right-panel-list {
+  flex: 0.20;
+  background-color: #ffffff;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20%
+}
+
+.right-panel-w-list{
+  /* width: 100% !important; */
+  /* background-color: blue; */
   flex: 1;
   background-color: #ffffff;
   overflow: hidden;
@@ -31,6 +78,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 20% 
 }
 
 .message-container {
@@ -208,10 +256,19 @@
 
 .right-panel-rest-sdk{
   flex: 1;
-  background-color: #ffffff;
+  background-color: #fff;
   overflow: hidden;
   transition: width 0.3s ease;
   display: flex;
   flex-direction: column;
   margin:10px;
+}
+
+.home-container-list-preview{
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto; 
 }

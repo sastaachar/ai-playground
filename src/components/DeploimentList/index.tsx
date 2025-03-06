@@ -1,74 +1,135 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Grid,
-  Typography,
-  Button,
-  Paper,
-  styled,
-} from "@mui/material";
+import { Typography, Button, Paper, styled, Tooltip } from "@mui/material";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
-  margin: theme.spacing(1, 0),
-  transition: "transform 0.3s ease-in-out",
-  "&:hover": {
-    transform: "scale(1.02)",
-    backgroundColor: theme.palette.action.hover,
-  },
+    padding: theme.spacing(1.5),
+    margin: theme.spacing(0.5, 0),
+    transition: "background-color 0.2s ease",
+    "&:hover": {
+        backgroundColor: theme.palette.mode === 'dark' ?
+            'rgba(255, 255, 255, 0.1)' :
+            'rgba(0, 0, 0, 0.04)',
+    },
+    borderRadius: '6px',
+    cursor: 'pointer',
+    '& a': {
+        textDecoration: 'none',
+        color: 'inherit',
+        display: 'block'
+    }
+}));
+
+const PanelContainer = styled("aside")(({ theme }) => ({
+    width: "260px",
+    height: "100vh",
+    backgroundColor: theme.palette.background.paper,
+    borderLeft: `1px solid ${theme.palette.divider}`,
+    borderTopRightRadius: '8px',
+    borderBottomRightRadius: '8px',
+    padding: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    position: 'fixed',
+    right: 0,
+    top: 0,
+    boxShadow: theme.shadows[2]
+}));
+
+const ListContainer = styled("div")(({ theme }) => ({
+    flexGrow: 1,
+    overflowY: "auto",
+    paddingRight: theme.spacing(1),
+
+    '&::-webkit-scrollbar': {
+        width: '6px',
+    },
+    '&::-webkit-scrollbar-track': {
+        background: theme.palette.mode === 'dark' ?
+            'rgba(255, 255, 255, 0.1)' :
+            'rgba(0, 0, 0, 0.05)',
+        borderRadius: '3px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+        background: theme.palette.mode === 'dark' ?
+            'rgba(255, 255, 255, 0.2)' :
+            'rgba(0, 0, 0, 0.2)',
+        borderRadius: '3px',
+    }
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+    marginBottom: theme.spacing(1),
+    alignSelf: 'flex-start',
+    fontSize: '0.75rem',
+    padding: theme.spacing(0.5, 1),
+    borderRadius: '4px',
+    transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
+    '&:hover': {
+        backgroundColor: theme.palette.action.hover,
+        boxShadow: theme.shadows[1],
+    },
 }));
 
 export const DeploimentList: React.FC = () => {
-  const [listData, setListData] = useState([]);
+    const [listData, setListData] = useState([]);
 
-  const getList = async () => {
-    try {
-      const dataList = await fetch(window.location.origin + "/api/deployment/list", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: "demo",
-          host: "test",
-        }),
-      });
-      const data = await dataList.json();
-      setListData(data);
-    } catch (error) {
-      console.error("Error fetching deployment list:", error);
-    }
-  };
+    const getList = async () => {
+        try {
+            const response = await fetch(window.location.origin + "/api/deployment/list", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: "demo", host: "test" }),
+            });
+            const data = await response.json();
+            setListData(data);
+        } catch (error) {
+            console.error("Error fetching deployment list:", error);
+        }
+    };
 
-  useEffect(() => {
-    getList();
-  }, []);
+    useEffect(() => { getList(); }, []);
 
-  return (
-    <Grid container spacing={2} justifyContent="center" padding={3}>
-      <Grid item xs={12} textAlign="center">
-        <Typography variant="h4" gutterBottom>
-          Deployment List
-        </Typography>
-      </Grid>
-      <Grid item xs={12} textAlign="center">
-        <Button variant="contained" onClick={getList}>
-          Get Updated List
-        </Button>
-      </Grid>
-      <Grid item xs={12}>
-        {listData.map((item: any) => (
-          <StyledPaper key={item.id} elevation={2}>
-            <Link
-              to={`/deployment/${item.id}`}
-              style={{ textDecoration: "none", display: "block", color: "inherit" }}
+    return (
+        <PanelContainer>
+            <Typography variant="subtitle1" gutterBottom sx={{
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: 'text.secondary',
+                px: 1,
+                mb: 1
+            }}>
+                Deployment History
+            </Typography>
+
+            <StyledButton
+                variant="text"
+                onClick={getList}
+                size="small"
             >
-              <Typography variant="h6">ID: {item.id}</Typography>
-              <Typography variant="body2">
-                Created At: {new Date(item.createdAt).toLocaleString()}
-              </Typography>
-            </Link>
-          </StyledPaper>
-        ))}
-      </Grid>
-    </Grid>
-  );
+                Refresh list
+            </StyledButton>
+
+            <ListContainer>
+                {listData.map((item: any) => (
+                    <StyledPaper key={item.id} elevation={0}>
+                        <Tooltip title={`ID: ${item.id} - Created At: ${new Date(item.createdAt).toLocaleString()}`} placement="right">
+                            <Link to={`/deployment/${item.id}`} style={{ display: 'block', overflow: 'hidden' }}>
+                                <Typography variant="subtitle2" sx={{
+                                    fontSize: '0.8125rem',
+                                    lineHeight: 1.2,
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    padding: '0px'
+                                }}>
+                                    {item.id}
+                                </Typography>
+                            </Link>
+                        </Tooltip>
+                    </StyledPaper>
+                ))}
+            </ListContainer>
+        </PanelContainer>
+    );
 };
