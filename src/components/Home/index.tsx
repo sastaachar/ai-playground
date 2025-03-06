@@ -14,7 +14,7 @@ const Home: React.FC = () => {
   const { username, host, code, curlCode } = useAppContext();
   const [deployedIds, setDeployedIds] = useState([]);
   const [api, contextHolder] = notification.useNotification();
-  const [showList, setShowList] = useState(true);
+  const [showList, setShowList] = useState(false);
 
   const callCreateDeployment = async (code: string) => {
     try {
