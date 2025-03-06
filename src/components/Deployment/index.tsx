@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Stackblitz from "../Stackblitz";
 import { useParams } from "react-router";
 import { Loader } from "../Loader";
+import RunEmbed from "../RunContainer/runEmbed";
 
 export const Deployment: React.FC = () => {
   const { deploymentId } = useParams();
@@ -29,7 +30,8 @@ export const Deployment: React.FC = () => {
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
-      <Stackblitz code={code} key={code} type="deployment" />
+      {/* <Stackblitz code={code} key={code} type="deployment" /> */}
+      <RunEmbed code={code} />
     </div>
   );
 };
