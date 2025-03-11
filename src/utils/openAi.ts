@@ -95,7 +95,7 @@ const askApi = ({ query, prevMessage, model = AI_MODEL.ONYX, chatSessionId }: { 
   const { host, token } = (window as any)._contentCache || {};
   const extraQuery = `
   If user has not provided any of the below values use below as default
-  thoughtSpotHost: ${host} , authToken ${token} , athType ${LIVEBOARD_ID}, authType: TrustedAuthTokenCookieless
+  thoughtSpotHost: ${host} , authToken ${token} , Liveboard id ${LIVEBOARD_ID}, authType: TrustedAuthTokenCookieless
   `;
 
   if (model === AI_MODEL.ONYX) {
