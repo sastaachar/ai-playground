@@ -19,7 +19,6 @@ const RunEmbed = ({ code }: { code: string }) => {
     document.getElementById("runner-container-embed")?.appendChild(iframe);
     iframeRef.current = iframe;
 
-    console.log("creating iframe", iframe);
   }, []);
 
   useEffect(() => {

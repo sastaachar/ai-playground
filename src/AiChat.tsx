@@ -65,7 +65,6 @@ async function streamOpenAI({
       try {
         const chunk = parseEventData(e.data);
         content += chunk?.content || "";
-        console.log(chunk.content)
         onData(content);
         onChunk?.(chunk);
 

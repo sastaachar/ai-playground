@@ -1,6 +1,7 @@
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { AI_MODEL } from "../../server/types";
 import { getOnyxResponse } from "../services/onyx";
+import { LIVEBOARD_ID } from "../constants";
 
 const url = "/api/convo/ask";
 
@@ -92,7 +93,10 @@ const askOnyx = ({ query, prevMessage, chatSessionId }: { query: string, prevMes
 const askApi = ({ query, prevMessage, model = AI_MODEL.ONYX, chatSessionId }: { query: string, prevMessage: any, model?: AI_MODEL, chatSessionId?: string }) => {
 
   const { host, token } = (window as any)._contentCache || {};
-  const extraQuery = `Use ${host} as the thoughtspot host and use ${token} as the auth token for liveboardid use 9bd202f5-d431-44bf-9a07-b4f7be372125 `;
+  const extraQuery = `
+  If user has not provided any of the below values use below as default
+  thoughtSpotHost: ${host} , authToken ${token} , athType ${LIVEBOARD_ID}, authType: TrustedAuthTokenCookieless
+  `;
 
   if (model === AI_MODEL.ONYX) {
     return askOnyx({ query: query + extraQuery , prevMessage, chatSessionId })

@@ -1,6 +1,8 @@
-export const JS_HOST = import.meta.env.VITE_DEFAULT_HOST || "https://172.32.93.13:8443";
-export const JS_USERNAME = import.meta.env.VITE_DEFAULT_USERNAME || "tsadmin";
-export const JS_PASSWORD = import.meta.env.VITE_DEFAULT_PASSWORD || "4Xyc1f%[H^3L";
+export const JS_HOST = import.meta.env.VITE_DEFAULT_HOST || "https://try-everywhere.thoughtspot.cloud";
+export const JS_USERNAME = import.meta.env.VITE_DEFAULT_USERNAME || "demo_devuser";
+export const JS_PASSWORD = import.meta.env.VITE_DEFAULT_PASSWORD || "PassWord1!";
+export const LIVEBOARD_ID = import.meta.env.VITE_DEFAULT_LIVEBOARD_ID || "b173faa2-e861-4540-a232-853f7aeb2c37"; 
+
 
 import { UiViewOption } from '@stackblitz/sdk';
 
