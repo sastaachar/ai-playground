@@ -6,7 +6,7 @@ type OnyxResponse = {
 
 export const createChatSession = async (): Promise<OnyxResponse> => {
 
-  const createChatSessionLink = `https://hubble.thoughtspot.dev/api/chat/create-chat-session`;
+  const createChatSessionLink = `https://spotgpt.thoughtspot.dev/api/chat/create-chat-session`;
 
   const response = await fetch(createChatSessionLink, {
     method: 'POST',
@@ -31,7 +31,7 @@ const getOnyxResponse = async ({ query, chatSessionId, parentMessageId = null }:
   }
 
 
-  const sendMessageLink = `https://hubble.thoughtspot.dev/api/chat/send-message`;
+  const sendMessageLink = `https://spotgpt.thoughtspot.dev/api/chat/send-message`;
   return fetch(sendMessageLink, {
     "headers": {
       "content-type": "application/json",
