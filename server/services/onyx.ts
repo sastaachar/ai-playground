@@ -44,7 +44,7 @@ const getOnyxResponse = async ({ query, chatSessionId, parentMessageId = null }:
       message: query,
       llm_override: {
         model_provider: "Default",
-        model_version: "gpt-4o-mini"
+        model_version: "gpt-4o"
       },
       prompt_id: 13,
       search_doc_ids: null,
